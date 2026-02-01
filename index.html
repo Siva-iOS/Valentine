@@ -1,72 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine?</title>
-  <style>
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: pink;
-      font-family: Arial, sans-serif;
-    }
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
 
-    .box {
-      text-align: center;
-      background: white;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff5f9e, #ffc371);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Segoe UI", sans-serif;
+    overflow: hidden;
+  }
 
-    h1 {
-      margin-bottom: 30px;
-    }
+  .card {
+    background: white;
+    padding: 40px 60px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    animation: pop 1s ease;
+    z-index: 10;
+  }
 
-    #yesBtn {
-      padding: 12px 25px;
-      font-size: 18px;
-      background: red;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+  @keyframes pop {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
 
-    #noBtn {
-      padding: 12px 25px;
-      font-size: 18px;
-      background: gray;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      position: absolute;
-      cursor: pointer;
-    }
-  </style>
+  h1 {
+    color: #ff4b7d;
+    margin-bottom: 25px;
+  }
+
+  .buttons {
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+  }
+
+  #yesBtn {
+    background: #ff4b7d;
+    color: white;
+    margin-right: 20px;
+  }
+
+  #noBtn {
+    background: #999;
+    color: white;
+    position: absolute;
+  }
+
+  .heart {
+    position: absolute;
+    color: rgba(255,255,255,0.7);
+    font-size: 20px;
+    animation: float 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+</style>
 </head>
+
 <body>
 
-<div class="box">
-  <h1>Will you be my Valentine? 💖</h1>
-  <button id="yesBtn" onclick="alert('Yayyy! 💕 I knew it!')">Yes</button>
-  <button id="noBtn">No</button>
+<div class="card">
+  <h1>Hey Chubiii, will you be my Valentine? 💖</h1>
+  <div class="buttons">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 😜</button>
+  </div>
 </div>
 
 <script>
-  const noBtn = document.getElementById("noBtn");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
 
-  noBtn.addEventListener("mouseover", moveButton);
-  noBtn.addEventListener("click", moveButton);
+// Random position for NO button
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
 
-  function moveButton() {
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-  }
+// Move every 1 second automatically
+setInterval(moveNo, 1000);
+
+// Also move when hovered
+noBtn.addEventListener("mouseover", moveNo);
+
+// YES button action
+yesBtn.addEventListener("click", () => {
+  document.body.innerHTML = `
+    <div style="
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      background:linear-gradient(135deg,#ff5f9e,#ffc371);
+      font-family:Segoe UI;
+      color:white;
+      text-align:center;">
+      <h1>Yayyy 💕<br>You made my day, Chubiii! 😍</h1>
+    </div>
+  `;
+});
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 300);
 </script>
 
 </body>
