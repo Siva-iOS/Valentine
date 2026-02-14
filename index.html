@@ -18,12 +18,13 @@ body {
 
 .card {
   background: white;
-  padding: 40px 60px;
+  padding: 35px 50px;
   border-radius: 25px;
   text-align: center;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
   animation: pop 1s ease;
   z-index: 10;
+  width: 320px;
 }
 
 @keyframes pop {
@@ -33,13 +34,18 @@ body {
 
 h1 {
   color: #ff4b7d;
-  margin-bottom: 25px;
-  min-height: 60px;
+  margin-bottom: 15px;
+  min-height: 50px;
+}
+
+img {
+  width: 180px;
+  margin: 15px 0;
 }
 
 button {
-  padding: 12px 30px;
-  font-size: 18px;
+  padding: 12px 25px;
+  font-size: 16px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
@@ -49,7 +55,7 @@ button {
 #yesBtn {
   background: #ff4b7d;
   color: white;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 #noBtn {
@@ -57,16 +63,12 @@ button {
   color: white;
 }
 
-.shake {
-  animation: shake 0.4s;
+.gift {
+  cursor: pointer;
+  transition: transform 0.3s;
 }
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
+.gift:hover {
+  transform: scale(1.1);
 }
 
 .heart {
@@ -99,67 +101,60 @@ button {
 <body>
 
 <div class="card">
-  <h1 id="question"></h1>
-  <button id="yesBtn">Yes 💕</button>
-  <button id="noBtn">No 😜</button>
+  <h1 id="text">Hey Chubiii 💖</h1>
+
+  <!-- Gift Image -->
+  <img id="giftImg" class="gift"
+       src="https://cdn-icons-png.flaticon.com/512/3468/3468377.png"
+       alt="gift">
+
+  <div id="buttons" style="display:none;">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 😜</button>
+  </div>
 </div>
 
 <script>
-const questionText = "Hey Chubiii… will you be my Valentine? 💖";
-const questionEl = document.getElementById("question");
+const textEl = document.getElementById("text");
+const giftImg = document.getElementById("giftImg");
+const buttonsDiv = document.getElementById("buttons");
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-let index = 0;
 let scale = 1;
 let clickCount = 0;
 
-const noMessages = [
-  "Are you sure? 😏",
-  "Think again 🤔",
-  "Pleaseee 🥺",
-  "Wrong choice 😂"
-];
+const noMessages = ["Are you sure? 😏", "Think again 🤔", "Pleaseee 🥺"];
 
-// Typewriter effect
-function typeWriter() {
-  if (index < questionText.length) {
-    questionEl.innerHTML += questionText.charAt(index);
-    index++;
-    setTimeout(typeWriter, 60);
-  }
-}
-typeWriter();
+giftImg.addEventListener("click", () => {
+  giftImg.src = "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
+  textEl.innerText = "I have a surprise for you 🎁";
+  setTimeout(() => {
+    giftImg.src = "https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif";
+    textEl.innerText = "Will you be my Valentine? 💖";
+    buttonsDiv.style.display = "block";
+  }, 1500);
+});
 
-// NO button logic
 noBtn.addEventListener("click", () => {
   clickCount++;
-
-  // Grow YES
   scale += 0.4;
   yesBtn.style.transform = `scale(${scale})`;
   yesBtn.style.boxShadow = "0 0 20px #ff4b7d";
-
-  // Shake NO
-  noBtn.classList.add("shake");
-  setTimeout(() => noBtn.classList.remove("shake"), 400);
 
   if (clickCount <= noMessages.length) {
     noBtn.innerText = noMessages[clickCount - 1];
   }
 
-  // Final stage
-  if (clickCount === 4) {
+  if (clickCount === 3) {
     yesBtn.style.position = "absolute";
     yesBtn.style.left = "50%";
     yesBtn.style.top = "50%";
     yesBtn.style.transform = "translate(-50%, -50%) scale(4)";
-    yesBtn.style.zIndex = "999";
     noBtn.style.display = "none";
   }
 });
 
-// YES button
 yesBtn.addEventListener("click", () => {
   document.body.innerHTML = `
     <div style="
@@ -172,14 +167,14 @@ yesBtn.addEventListener("click", () => {
       color:white;
       text-align:center;
       flex-direction:column;">
+      <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" width="250">
       <h1>YAYYY 💕😍</h1>
-      <h2>You just made my day!</h2>
+      <h2>You just made me the happiest person ever!</h2>
     </div>
   `;
   startConfetti();
 });
 
-// Floating hearts
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
@@ -191,17 +186,14 @@ function createHeart() {
 }
 setInterval(createHeart, 300);
 
-// Confetti
 function startConfetti() {
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < 120; i++) {
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
     confetti.style.left = Math.random() * 100 + "vw";
     confetti.style.background =
       ["#ff4b7d","#ffd700","#00eaff","#7CFF00"]
       [Math.floor(Math.random()*4)];
-    confetti.style.animationDuration =
-      (Math.random() * 2 + 2) + "s";
     document.body.appendChild(confetti);
     setTimeout(() => confetti.remove(), 3000);
   }
