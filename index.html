@@ -1,128 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine 💖</title>
+<title>For My Valentine ❤️</title>
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffe6f0;
-    font-family: 'Comic Sans MS', cursive;
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background:#f4e7da;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
-.card {
-    background: white;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    width: 350px;
+.card{
+    background:#ffd6e8;
+    width:350px;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    position:relative;
 }
 
-h1 {
-    color: #ff4d88;
+h2{
+    margin:10px 0 20px;
 }
 
-.gif {
-    width: 200px;
-    margin: 15px 0;
+img{
+    width:150px;
+    margin-bottom:15px;
 }
 
-button {
-    padding: 12px 25px;
-    font-size: 18px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    margin: 8px;
-    transition: 0.3s;
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    margin:5px;
+    font-weight:bold;
 }
 
-#yesBtn {
-    background-color: #ff1e66;
-    color: white;
+.yes{
+    background:#ff4081;
+    color:white;
 }
 
-#noBtn {
-    background-color: #ddd;
+.no{
+    background:white;
 }
 
-.final-message {
-    display: none;
-    font-size: 22px;
-    color: #ff1e66;
-    margin-top: 15px;
+.hidden{
+    display:none;
+}
+
+.gift-box{
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin:8px 0;
+    cursor:pointer;
+}
+
+.error{
+    color:red;
+    font-size:14px;
 }
 </style>
 </head>
-
 <body>
 
 <div class="card">
-    <h1 id="question">Will You Be My Valentine? 💖</h1>
 
-    <!-- Cute GIF -->
-    <img id="cuteGif" class="gif"
-    src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
-    alt="cute gif">
+<!-- SECTION 1 - Proposal -->
+<div id="proposal">
+    <img id="mainGif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+    <h2 id="question">Will you be mine? 🥺</h2>
+    <button id="yesBtn" class="yes">Yes ❤️</button>
+    <button id="noBtn" class="no">No</button>
+</div>
 
-    <div>
-        <button id="yesBtn">Yes 💕</button>
-        <button id="noBtn">No 😢</button>
+<!-- SECTION 2 - Success -->
+<div id="success" class="hidden">
+    <h2>Happy Valentine Day Baby 💍</h2>
+    <button onclick="showGifts()" class="yes">See My Gifts 🎁</button>
+</div>
+
+<!-- SECTION 3 - Gifts -->
+<div id="gifts" class="hidden">
+    <h2>Something for You 💖</h2>
+
+    <div class="gift-box" onclick="openGift(1)">🎁 Gift 1</div>
+    <div class="gift-box" onclick="openGift(2)">🎁 Gift 2</div>
+    <div class="gift-box" onclick="openGift(3)">🎁 Gift 3</div>
+
+    <button onclick="showQuiz()" class="yes">Finally →</button>
+</div>
+
+<!-- SECTION 4 - Quiz -->
+<div id="quiz" class="hidden">
+    <h2 id="quizQuestion">Who is the absolute Boss? 😎</h2>
+
+    <div id="options">
+        <label><input type="radio" name="q" value="me"> Me 😌</label><br>
+        <label><input type="radio" name="q" value="you"> You 👑</label>
     </div>
 
-    <div class="final-message" id="finalMessage">
-        YAYYY 😍💘 You made me the happiest!!
-    </div>
+    <div class="error" id="errorMsg"></div>
+
+    <button onclick="submitAnswer()" class="yes">Submit</button>
+</div>
+
 </div>
 
 <script>
-let yesBtn = document.getElementById("yesBtn");
-let noBtn = document.getElementById("noBtn");
-let question = document.getElementById("question");
-let finalMessage = document.getElementById("finalMessage");
-let gif = document.getElementById("cuteGif");
-
-let size = 18;
-
-let noMessages = [
-    "Are you sure? 🥺",
-    "Really sure?? 😭",
-    "Think again 💔",
-    "Pleaseee 🥹",
-    "Don't do this 😢",
-    "Last chance 😳"
+let noTexts = [
+    "Think again 😭",
+    "Are you sure 😡?",
+    "See This 🥺",
+    "Last chance 😢"
 ];
 
 let clickCount = 0;
+let yesSize = 16;
 
-noBtn.addEventListener("click", function() {
-    size += 8;
-    yesBtn.style.fontSize = size + "px";
-    yesBtn.style.padding = (size/2) + "px " + size + "px";
+let noBtn = document.getElementById("noBtn");
+let yesBtn = document.getElementById("yesBtn");
+let question = document.getElementById("question");
+let mainGif = document.getElementById("mainGif");
 
-    if (clickCount < noMessages.length) {
-        noBtn.innerText = noMessages[clickCount];
-    } else {
-        noBtn.innerText = "Okay fine 😭";
+noBtn.addEventListener("click", function(){
+    if(clickCount < noTexts.length){
+        question.innerText = noTexts[clickCount];
     }
-
+    yesSize += 8;
+    yesBtn.style.fontSize = yesSize + "px";
+    yesBtn.style.padding = "10px " + (yesSize) + "px";
     clickCount++;
 });
 
-yesBtn.addEventListener("click", function() {
-    question.style.display = "none";
-    noBtn.style.display = "none";
-    yesBtn.style.display = "none";
-    gif.src = "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif";
-    finalMessage.style.display = "block";
+yesBtn.addEventListener("click", function(){
+    document.getElementById("proposal").classList.add("hidden");
+    document.getElementById("success").classList.remove("hidden");
 });
+
+function showGifts(){
+    document.getElementById("success").classList.add("hidden");
+    document.getElementById("gifts").classList.remove("hidden");
+}
+
+function openGift(num){
+    alert("You opened Gift " + num + " 💖\n\n(You can customize this message!)");
+}
+
+function showQuiz(){
+    document.getElementById("gifts").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+}
+
+let currentQuestion = 1;
+
+function submitAnswer(){
+    let selected = document.querySelector('input[name="q"]:checked');
+    let error = document.getElementById("errorMsg");
+
+    if(!selected){
+        error.innerText = "Oops, please select an answer.";
+        return;
+    }
+
+    if(currentQuestion === 1){
+        if(selected.value === "you"){
+            currentQuestion = 2;
+            document.getElementById("quizQuestion").innerText = "Who fights a lot? 😂";
+            document.getElementById("options").innerHTML = `
+                <label><input type="radio" name="q" value="me"> Me 🙈</label><br>
+                <label><input type="radio" name="q" value="you"> You 😝</label>
+            `;
+            error.innerText = "";
+        }else{
+            error.innerText = "Oops, please try again 😏";
+        }
+    }else{
+        if(selected.value === "you"){
+            alert("Correct again! 😍 You win my heart forever 💖");
+        }else{
+            error.innerText = "Oops, try again 😜";
+        }
+    }
+}
 </script>
 
 </body>
