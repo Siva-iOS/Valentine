@@ -18,34 +18,28 @@ body {
 
 .card {
   background: white;
-  padding: 30px 40px;
+  padding: 40px 60px;
   border-radius: 25px;
   text-align: center;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  width: 340px;
+  animation: pop 1s ease;
+  z-index: 10;
+}
+
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 h1 {
   color: #ff4b7d;
-}
-
-.gift {
-  width: 120px;
-  cursor: pointer;
-  margin: 10px;
-  transition: transform 0.3s;
-}
-.gift:hover {
-  transform: scale(1.1);
-}
-
-.hidden {
-  display: none;
+  margin-bottom: 25px;
+  min-height: 60px;
 }
 
 button {
-  padding: 12px 25px;
-  font-size: 16px;
+  padding: 12px 30px;
+  font-size: 18px;
   border-radius: 20px;
   border: none;
   cursor: pointer;
@@ -55,7 +49,7 @@ button {
 #yesBtn {
   background: #ff4b7d;
   color: white;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 #noBtn {
@@ -63,10 +57,41 @@ button {
   color: white;
 }
 
-.preview {
-  max-width: 250px;
-  border-radius: 15px;
-  margin: 10px 0;
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+.heart {
+  position: absolute;
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  animation: float 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh) rotate(0deg); }
+  to { transform: translateY(110vh) rotate(720deg); }
 }
 </style>
 </head>
@@ -74,116 +99,67 @@ button {
 <body>
 
 <div class="card">
-  <h1 id="text">I have 3 gifts for you 🎁</h1>
-
-  <!-- Upload Inputs -->
-  <input type="file" id="img1Input" accept="image/*" class="hidden">
-  <input type="file" id="img2Input" accept="image/*" class="hidden">
-  <input type="file" id="videoInput" accept="video/*" class="hidden">
-
-  <!-- Gift Images -->
-  <img src="https://cdn-icons-png.flaticon.com/512/3468/3468377.png" id="gift1" class="gift">
-  <img src="https://cdn-icons-png.flaticon.com/512/3468/3468377.png" id="gift2" class="gift hidden">
-  <img src="https://cdn-icons-png.flaticon.com/512/3468/3468377.png" id="gift3" class="gift hidden">
-
-  <!-- Preview -->
-  <div id="previewArea"></div>
-
-  <!-- Buttons -->
-  <div id="buttons" class="hidden">
-    <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 😜</button>
-  </div>
+  <h1 id="question"></h1>
+  <button id="yesBtn">Yes 💕</button>
+  <button id="noBtn">No 😜</button>
 </div>
 
 <script>
-const textEl = document.getElementById("text");
-const gift1 = document.getElementById("gift1");
-const gift2 = document.getElementById("gift2");
-const gift3 = document.getElementById("gift3");
-const previewArea = document.getElementById("previewArea");
-const buttonsDiv = document.getElementById("buttons");
-
-const img1Input = document.getElementById("img1Input");
-const img2Input = document.getElementById("img2Input");
-const videoInput = document.getElementById("videoInput");
-
+const questionText = "Hey Chubiii… will you be my Valentine? 💖";
+const questionEl = document.getElementById("question");
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
+let index = 0;
 let scale = 1;
 let clickCount = 0;
 
-// Gift 1
-gift1.addEventListener("click", () => {
-  img1Input.click();
-});
-img1Input.addEventListener("change", () => {
-  const file = img1Input.files[0];
-  const img = document.createElement("img");
-  img.src = URL.createObjectURL(file);
-  img.className = "preview";
-  previewArea.innerHTML = "";
-  previewArea.appendChild(img);
+const noMessages = [
+  "Are you sure? 😏",
+  "Think again 🤔",
+  "Pleaseee 🥺",
+  "Wrong choice 😂"
+];
 
-  textEl.innerText = "Gift 2 🎁";
-  gift1.classList.add("hidden");
-  gift2.classList.remove("hidden");
-});
+// Typewriter effect
+function typeWriter() {
+  if (index < questionText.length) {
+    questionEl.innerHTML += questionText.charAt(index);
+    index++;
+    setTimeout(typeWriter, 60);
+  }
+}
+typeWriter();
 
-// Gift 2
-gift2.addEventListener("click", () => {
-  img2Input.click();
-});
-img2Input.addEventListener("change", () => {
-  const file = img2Input.files[0];
-  const img = document.createElement("img");
-  img.src = URL.createObjectURL(file);
-  img.className = "preview";
-  previewArea.innerHTML = "";
-  previewArea.appendChild(img);
-
-  textEl.innerText = "Final Gift 🎁 (Video)";
-  gift2.classList.add("hidden");
-  gift3.classList.remove("hidden");
-});
-
-// Gift 3 (video)
-gift3.addEventListener("click", () => {
-  videoInput.click();
-});
-videoInput.addEventListener("change", () => {
-  const file = videoInput.files[0];
-  const video = document.createElement("video");
-  video.src = URL.createObjectURL(file);
-  video.controls = true;
-  video.className = "preview";
-  previewArea.innerHTML = "";
-  previewArea.appendChild(video);
-
-  textEl.innerText = "Will you be my Valentine? 💖";
-  gift3.classList.add("hidden");
-  buttonsDiv.classList.remove("hidden");
-});
-
-// NO logic
+// NO button logic
 noBtn.addEventListener("click", () => {
   clickCount++;
+
+  // Grow YES
   scale += 0.4;
   yesBtn.style.transform = `scale(${scale})`;
+  yesBtn.style.boxShadow = "0 0 20px #ff4b7d";
 
-  if (clickCount === 1) noBtn.innerText = "Are you sure? 😏";
-  else if (clickCount === 2) noBtn.innerText = "Think again 🤔";
-  else if (clickCount === 3) {
+  // Shake NO
+  noBtn.classList.add("shake");
+  setTimeout(() => noBtn.classList.remove("shake"), 400);
+
+  if (clickCount <= noMessages.length) {
+    noBtn.innerText = noMessages[clickCount - 1];
+  }
+
+  // Final stage
+  if (clickCount === 4) {
     yesBtn.style.position = "absolute";
     yesBtn.style.left = "50%";
     yesBtn.style.top = "50%";
     yesBtn.style.transform = "translate(-50%, -50%) scale(4)";
+    yesBtn.style.zIndex = "999";
     noBtn.style.display = "none";
   }
 });
 
-// YES
+// YES button
 yesBtn.addEventListener("click", () => {
   document.body.innerHTML = `
     <div style="
@@ -197,10 +173,39 @@ yesBtn.addEventListener("click", () => {
       text-align:center;
       flex-direction:column;">
       <h1>YAYYY 💕😍</h1>
-      <h2>You made me the happiest person ever!</h2>
+      <h2>You just made my day!</h2>
     </div>
   `;
+  startConfetti();
 });
+
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 300);
+
+// Confetti
+function startConfetti() {
+  for (let i = 0; i < 150; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background =
+      ["#ff4b7d","#ffd700","#00eaff","#7CFF00"]
+      [Math.floor(Math.random()*4)];
+    confetti.style.animationDuration =
+      (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }
+}
 </script>
 
 </body>
