@@ -5,114 +5,161 @@
 <title>Valentine 💖</title>
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff5f9e, #ffc371);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Segoe UI", sans-serif;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff5f9e, #ffc371);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+  overflow: hidden;
+}
 
-  .card {
-    background: white;
-    padding: 40px 60px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-    animation: pop 1s ease;
-    z-index: 10;
-  }
+.card {
+  background: white;
+  padding: 40px 60px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  animation: pop 1s ease;
+  z-index: 10;
+}
 
-  @keyframes pop {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-  h1 {
-    color: #ff4b7d;
-    margin-bottom: 25px;
-  }
+h1 {
+  color: #ff4b7d;
+  margin-bottom: 25px;
+  min-height: 60px;
+}
 
-  button {
-    padding: 12px 30px;
-    font-size: 18px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+button {
+  padding: 12px 30px;
+  font-size: 18px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-  #yesBtn {
-    background: #ff4b7d;
-    color: white;
-    margin-right: 20px;
-    z-index: 1;
-  }
+#yesBtn {
+  background: #ff4b7d;
+  color: white;
+  margin-right: 20px;
+}
 
-  #noBtn {
-    background: #999;
-    color: white;
-  }
+#noBtn {
+  background: #999;
+  color: white;
+}
 
-  .heart {
-    position: absolute;
-    color: rgba(255,255,255,0.7);
-    font-size: 20px;
-    animation: float 6s linear infinite;
-    pointer-events: none;
-  }
+.shake {
+  animation: shake 0.4s;
+}
 
-  @keyframes float {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
-  }
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+.heart {
+  position: absolute;
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  animation: float 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh) rotate(0deg); }
+  to { transform: translateY(110vh) rotate(720deg); }
+}
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h1>Hey Chubiii, will you be my Valentine? 💖</h1>
+  <h1 id="question"></h1>
   <button id="yesBtn">Yes 💕</button>
   <button id="noBtn">No 😜</button>
 </div>
 
 <script>
+const questionText = "Hey Chubiii… will you be my Valentine? 💖";
+const questionEl = document.getElementById("question");
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
+let index = 0;
 let scale = 1;
 let clickCount = 0;
 
+const noMessages = [
+  "Are you sure? 😏",
+  "Think again 🤔",
+  "Pleaseee 🥺",
+  "Wrong choice 😂"
+];
+
+// Typewriter effect
+function typeWriter() {
+  if (index < questionText.length) {
+    questionEl.innerHTML += questionText.charAt(index);
+    index++;
+    setTimeout(typeWriter, 60);
+  }
+}
+typeWriter();
+
+// NO button logic
 noBtn.addEventListener("click", () => {
   clickCount++;
 
-  // Grow YES every time NO is clicked
+  // Grow YES
   scale += 0.4;
   yesBtn.style.transform = `scale(${scale})`;
   yesBtn.style.boxShadow = "0 0 20px #ff4b7d";
 
-  if (clickCount === 1) {
-    noBtn.innerText = "Are you sure? 😏";
-  } 
-  else if (clickCount === 2) {
-    noBtn.innerText = "Think again 🤔";
-  } 
-  else if (clickCount === 3) {
-    // FINAL: YES overlaps NO and NO disappears
+  // Shake NO
+  noBtn.classList.add("shake");
+  setTimeout(() => noBtn.classList.remove("shake"), 400);
+
+  if (clickCount <= noMessages.length) {
+    noBtn.innerText = noMessages[clickCount - 1];
+  }
+
+  // Final stage
+  if (clickCount === 4) {
     yesBtn.style.position = "absolute";
     yesBtn.style.left = "50%";
     yesBtn.style.top = "50%";
     yesBtn.style.transform = "translate(-50%, -50%) scale(4)";
     yesBtn.style.zIndex = "999";
-
     noBtn.style.display = "none";
   }
 });
 
+// YES button
 yesBtn.addEventListener("click", () => {
   document.body.innerHTML = `
     <div style="
@@ -125,10 +172,11 @@ yesBtn.addEventListener("click", () => {
       color:white;
       text-align:center;
       flex-direction:column;">
-      <h1>Yayyy 💕😍</h1>
-      <h2>You just made me the happiest person ever!</h2>
+      <h1>YAYYY 💕😍</h1>
+      <h2>You just made my day!</h2>
     </div>
   `;
+  startConfetti();
 });
 
 // Floating hearts
@@ -139,10 +187,25 @@ function createHeart() {
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = (Math.random() * 20 + 10) + "px";
   document.body.appendChild(heart);
-
   setTimeout(() => heart.remove(), 6000);
 }
 setInterval(createHeart, 300);
+
+// Confetti
+function startConfetti() {
+  for (let i = 0; i < 150; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background =
+      ["#ff4b7d","#ffd700","#00eaff","#7CFF00"]
+      [Math.floor(Math.random()*4)];
+    confetti.style.animationDuration =
+      (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
+  }
+}
 </script>
 
 </body>
