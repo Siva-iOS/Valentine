@@ -29,6 +29,13 @@ body{
  box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
+h2{color:#ff4081;}
+
+img{
+ width:160px;
+ margin-bottom:10px;
+}
+
 button{
  padding:12px 25px;
  border:none;
@@ -104,6 +111,7 @@ button{
 <div class="card">
 
 <div id="proposal">
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 <h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
 <button id="yesBtn" class="yes">Yes ❤️</button>
 <button id="noBtn" class="no">No</button>
@@ -128,20 +136,26 @@ button{
 </div>
 
 <script>
+let noTexts=["Think again 😭","Are you sure 😡?","Pleaseee 🥺","Last chance 😢"];
+let count=0;
+let size=16;
+
 let stage = 0;
-let yesSize = 1;
 
-noBtn.onclick=()=>{
- yesSize += 0.2;
- yesBtn.style.transform = `scale(${yesSize})`;
- question.innerText="Come on Chubiii… you know the answer 😏💖";
-};
+noBtn.onclick=function(){
+ if(count<noTexts.length){
+   question.innerText=noTexts[count];
+ }
+ size+=8;
+ yesBtn.style.fontSize=size+"px";
+ count++;
+}
 
-yesBtn.onclick=()=>{
+yesBtn.onclick=function(){
  proposal.classList.add("hidden");
  success.classList.remove("hidden");
  showToast("Start with Gift 1 🎁");
-};
+}
 
 function openGift(n){
 
