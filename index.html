@@ -39,19 +39,11 @@ body{
     border-radius:25px;
     text-align:center;
     box-shadow:0 15px 40px rgba(0,0,0,0.2);
-    position:relative;
-    transition:0.5s;
 }
 
-h2{
-    margin:15px 0;
-    color:#ff4081;
-}
+h2{color:#ff4081;}
 
-img{
-    width:160px;
-    margin-bottom:10px;
-}
+img{width:160px;margin-bottom:10px;}
 
 button{
     padding:12px 25px;
@@ -63,23 +55,9 @@ button{
     transition:0.3s;
 }
 
-.yes{
-    background:#ff4081;
-    color:white;
-    box-shadow:0 0 10px #ff4081;
-}
-
-.yes:hover{
-    transform:scale(1.1);
-}
-
-.no{
-    background:#f1f1f1;
-}
-
-.hidden{
-    display:none;
-}
+.yes{background:#ff4081;color:white;}
+.no{background:#f1f1f1;}
+.hidden{display:none;}
 
 .letter-box{
     background:#ffe6f0;
@@ -87,15 +65,8 @@ button{
     border-radius:15px;
     margin:10px 0;
     cursor:pointer;
-    transition:0.3s;
 }
 
-.letter-box:hover{
-    transform:scale(1.05);
-    background:#ffd1dc;
-}
-
-/* Toast */
 .toast{
     position:fixed;
     bottom:30px;
@@ -107,23 +78,6 @@ button{
     transition:0.5s;
 }
 
-/* Confetti */
-.confetti{
-    position:fixed;
-    width:10px;
-    height:10px;
-    background:red;
-    top:0;
-    animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(100vh) rotate(720deg);
-        opacity:0;
-    }
-}
-
 /* Modal */
 .modal{
     position:fixed;
@@ -133,25 +87,13 @@ button{
     justify-content:center;
     align-items:center;
 }
-
 .letter{
     background:white;
     padding:25px;
     width:300px;
     border-radius:20px;
-    animation:pop 0.3s ease;
 }
-
-@keyframes pop{
-    from{transform:scale(0.7);}
-    to{transform:scale(1);}
-}
-
-.close{
-    text-align:right;
-    cursor:pointer;
-    color:red;
-}
+.close{cursor:pointer;color:red;text-align:right}
 
 /* Collage */
 .collage{
@@ -200,7 +142,7 @@ button{
 </div>
 
 <script>
-/* Floating Hearts Generator */
+/* Floating Hearts */
 setInterval(()=>{
     let heart=document.createElement("div");
     heart.className="heart";
@@ -224,92 +166,101 @@ noBtn.onclick=function(){
     count++;
 }
 
-/* YES CLICK */
 yesBtn.onclick=function(){
-    launchConfetti();
-    showToast("She said YESSSS 😍💖");
     document.getElementById("proposal").classList.add("hidden");
     document.getElementById("success").classList.remove("hidden");
-}
-
-/* Confetti */
-function launchConfetti(){
-    for(let i=0;i<80;i++){
-        let c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=Math.random()*100+"vw";
-        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
-    }
+    showToast("She said YES 😍");
 }
 
 /* Toast */
 function showToast(msg){
-    let toast=document.getElementById("toast");
-    toast.innerText=msg;
-    toast.style.opacity=1;
-    setTimeout(()=>toast.style.opacity=0,3000);
+    let t=document.getElementById("toast");
+    t.innerText=msg;
+    t.style.opacity=1;
+    setTimeout(()=>t.style.opacity=0,2500);
 }
 
-/* Letters */
+/* Show letters */
 function showLetters(){
-    document.getElementById("success").classList.add("hidden");
-    document.getElementById("letters").classList.remove("hidden");
+    success.classList.add("hidden");
+    letters.classList.remove("hidden");
 }
+
+/* Gift Conditions */
+let stage = 0;
+/*
+0 = nothing
+1 = gift1 fake
+2 = gift2 fake
+3 = gift1 real
+4 = gift2 real (gift3 unlock)
+*/
 
 function openLetter(n){
-    let text="";
-    
-    if(n==1){
-      text = `
-      <h3>My Sweet Chubiii 💕</h3>
-      <p>
-      From the moment you came into my life, everything became brighter ✨<br><br>
-      Your smile is my favorite view ❤️<br>
-      Your voice is my comfort 💖<br><br>
-      I don’t need anything else…  
-      as long as I have you with me 💫
-      </p>`;
-    }
+ let text="";
 
-    if(n==2){
-      text = `
-      <h3>Our Beautiful Memories 📸</h3>
-      <div class="collage">
-        <img src="pic1.jpg">
-        <img src="pic2.jpg">
-        <img src="pic3.jpg">
-        <img src="pic4.jpg">
-        <img src="pic5.jpg">
-        <img src="pic6.jpg">
-      </div>
-      <p>
-      Every picture holds a story of us 💕<br>
-      And every story has my heart in it ❤️
-      </p>`;
-    }
+ if(n==1){
+   if(stage==0){
+     text="<h3>😜 Nothing here</h3><p>Go to Gift 2 👉</p>";
+     stage=1;
+     showToast("Now open Gift 2");
+   }
+   else if(stage==2){
+     text="<h3>My Sweet Chubiii 💕</h3><p>You are my happiness, my peace and my forever ❤️</p>";
+     stage=3;
+     showToast("Now open Gift 2 again");
+   }
+   else{
+     showToast("Follow the order 😏");
+     return;
+   }
+ }
 
-    if(n==3){
-      text = `
-      <h3>Our Forever Video 🎥❤️</h3>
-      <video controls style="width:100%;border-radius:12px;">
-        <source src="video1.mp4" type="video/mp4">
-      </video>
-      <p>
-      I promise you one thing…  
-      today, tomorrow, and always —  
-      I will love you more and more every day ❤️  
-      You are my favorite memory and my forever person 💖
-      </p>`;
-    }
+ if(n==2){
+   if(stage==1){
+     text="<h3>😂 Got you</h3><p>I won’t fool you… go back to Gift 1</p>";
+     stage=2;
+     showToast("Go back to Gift 1");
+   }
+   else if(stage==3){
+     text=`
+     <h3>Our Memories 📸</h3>
+     <div class="collage">
+       <img src="pic1.jpg">
+       <img src="pic2.jpg">
+       <img src="pic3.jpg">
+       <img src="pic4.jpg">
+       <img src="pic5.jpg">
+       <img src="pic6.jpg">
+     </div>`;
+     stage=4;
+     showToast("Gift 3 unlocked 🎥");
+   }
+   else{
+     showToast("Open Gift 1 first");
+     return;
+   }
+ }
 
-    letterContent.innerHTML=text;
-    modal.style.display="flex";
+ if(n==3){
+   if(stage<4){
+     showToast("Finish Gift 1 & 2 first 😜");
+     return;
+   }
+   text=`
+   <h3>Our Forever Video 🎥❤️</h3>
+   <video controls style="width:100%;border-radius:12px;">
+     <source src="video1.mp4" type="video/mp4">
+   </video>
+   <p>You are my favorite memory and my forever person 💖</p>`;
+ }
+
+ letterContent.innerHTML=text;
+ modal.style.display="flex";
 }
 
 function closeLetter(){
-    modal.style.display="none";
+ modal.style.display="none";
 }
 </script>
 
