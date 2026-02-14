@@ -27,13 +27,38 @@ body{
  border-radius:25px;
  text-align:center;
  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+ position:relative;
+ z-index:2;
 }
 
 h2{color:#ff4081;}
 
-img{
+.main-gif{
  width:160px;
  margin-bottom:10px;
+}
+
+/* Cat gifs */
+.cat{
+ position:absolute;
+ width:80px;
+ animation:float 6s ease-in-out infinite;
+ z-index:1;
+}
+.cat1{top:10%; left:5%;}
+.cat2{top:20%; right:5%;}
+.cat3{bottom:10%; left:10%;}
+.cat4{bottom:15%; right:10%;}
+
+@keyframes float{
+ 0%{transform:translateY(0);}
+ 50%{transform:translateY(-20px);}
+ 100%{transform:translateY(0);}
+}
+
+.buttons{
+ position:relative;
+ height:80px;
 }
 
 button{
@@ -44,9 +69,20 @@ button{
  margin:8px;
  font-size:16px;
  transition:0.3s;
+ position:absolute;
 }
-.yes{background:#ff4081;color:white;}
-.no{background:#eee;}
+
+.yes{
+ background:#ff4081;
+ color:white;
+ left:30%;
+ z-index:2;
+}
+.no{
+ background:#eee;
+ right:30%;
+}
+
 .hidden{display:none;}
 
 .gift{
@@ -108,13 +144,22 @@ button{
 </head>
 <body>
 
+<!-- Cat GIFs -->
+<img class="cat cat1" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+<img class="cat cat2" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
+<img class="cat cat3" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+<img class="cat cat4" src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif">
+
 <div class="card">
 
 <div id="proposal">
-<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+<img class="main-gif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 <h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
+
+<div class="buttons">
 <button id="yesBtn" class="yes">Yes ❤️</button>
 <button id="noBtn" class="no">No</button>
+</div>
 </div>
 
 <div id="success" class="hidden">
@@ -138,7 +183,7 @@ button{
 <script>
 let noTexts=["Think again 😭","Are you sure 😡?","Pleaseee 🥺","Last chance 😢"];
 let count=0;
-let size=16;
+let size=1;
 
 let stage = 0;
 
@@ -146,8 +191,16 @@ noBtn.onclick=function(){
  if(count<noTexts.length){
    question.innerText=noTexts[count];
  }
- size+=8;
- yesBtn.style.fontSize=size+"px";
+ size+=0.3;
+ yesBtn.style.transform="scale("+size+")";
+
+ // overlap NO on last chance
+ if(count==noTexts.length-1){
+   yesBtn.style.left="15%";
+   yesBtn.style.right="15%";
+   yesBtn.style.width="70%";
+ }
+
  count++;
 }
 
@@ -158,7 +211,6 @@ yesBtn.onclick=function(){
 }
 
 function openGift(n){
-
  if(n==1){
    if(stage==0){
      showModal("😜 Idhula onnum illa… next gift ku po");
@@ -172,15 +224,14 @@ function openGift(n){
      From the first smile I saw, my life started feeling brighter 😘<br><br>
      Your smile is my daily happiness 💖<br>
      With you, everything feels complete 💫<br><br>
-     You are not just my love…  
-     you are my comfort, my peace, my everything ❤️
+     You are my comfort, my peace, my everything ❤️
      </p>
      `);
      showToast("Now open Gift 2 again 💝");
      stage=3;
    }
    else{
-     showToast("Wait Chubiii 😏 follow the order");
+     showToast("Follow the order 😏");
    }
  }
 
@@ -204,25 +255,16 @@ function openGift(n){
        <img src="pic5.jpg">
        <img src="pic6.jpg">
      </div>
-     <p>
-     These photos are not just pictures…  
-     they are our memories 💕<br><br>
-     One photo, one smile,  
-     and one beautiful story 😍<br><br>
-     With you, every small moment becomes special ✨
-     </p>
+     <p>Every photo holds a beautiful memory with you 💕</p>
      `);
      showToast("Gift 3 unlocked 🎥");
      stage=4;
-   }
-   else{
-     showToast("Go back to Gift 1 again 😘");
    }
  }
 
  if(n==3){
    if(stage<4){
-     showToast("First finish Gift 1 & 2 😜");
+     showToast("Finish Gift 1 & 2 first 😜");
    }
    else{
      showModal(`
@@ -237,7 +279,6 @@ function openGift(n){
      You are my favorite memory and my forever person 💖
      </p>
      `);
-     showToast("Best gift for you 😍");
    }
  }
 }
