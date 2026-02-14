@@ -34,7 +34,6 @@
   h1 {
     color: #ff4b7d;
     margin-bottom: 25px;
-    min-height: 60px;
   }
 
   button {
@@ -50,23 +49,12 @@
     background: #ff4b7d;
     color: white;
     margin-right: 20px;
+    z-index: 1;
   }
 
   #noBtn {
     background: #999;
     color: white;
-  }
-
-  .shake {
-    animation: shake 0.4s;
-  }
-
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
   }
 
   .heart {
@@ -81,71 +69,50 @@
     from { transform: translateY(100vh); opacity: 1; }
     to { transform: translateY(-10vh); opacity: 0; }
   }
-
-  .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: red;
-    animation: fall 3s linear forwards;
-  }
-
-  @keyframes fall {
-    from { transform: translateY(-10vh) rotate(0deg); }
-    to { transform: translateY(110vh) rotate(720deg); }
-  }
 </style>
 </head>
 
 <body>
 
 <div class="card">
-  <h1 id="question"></h1>
+  <h1>Hey Chubiii, will you be my Valentine? 💖</h1>
   <button id="yesBtn">Yes 💕</button>
   <button id="noBtn">No 😜</button>
 </div>
 
 <script>
-const questionText = "Hey Chubiii… will you be my Valentine? 💖";
-const questionEl = document.getElementById("question");
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-let index = 0;
 let scale = 1;
-const noMessages = [
-  "Are you sure? 😏",
-  "Think again 💭",
-  "Wrong button 😂",
-  "Try YES 💕",
-  "Don’t break my heart 💔"
-];
-let msgIndex = 0;
+let clickCount = 0;
 
-// Typewriter effect
-function typeWriter() {
-  if (index < questionText.length) {
-    questionEl.innerHTML += questionText.charAt(index);
-    index++;
-    setTimeout(typeWriter, 60);
-  }
-}
-typeWriter();
-
-// No button behavior
 noBtn.addEventListener("click", () => {
-  scale += 0.15;
+  clickCount++;
+
+  // Grow YES every time NO is clicked
+  scale += 0.4;
   yesBtn.style.transform = `scale(${scale})`;
   yesBtn.style.boxShadow = "0 0 20px #ff4b7d";
 
-  noBtn.classList.add("shake");
-  setTimeout(() => noBtn.classList.remove("shake"), 400);
+  if (clickCount === 1) {
+    noBtn.innerText = "Are you sure? 😏";
+  } 
+  else if (clickCount === 2) {
+    noBtn.innerText = "Think again 🤔";
+  } 
+  else if (clickCount === 3) {
+    // FINAL: YES overlaps NO and NO disappears
+    yesBtn.style.position = "absolute";
+    yesBtn.style.left = "50%";
+    yesBtn.style.top = "50%";
+    yesBtn.style.transform = "translate(-50%, -50%) scale(4)";
+    yesBtn.style.zIndex = "999";
 
-  noBtn.innerText = noMessages[msgIndex % noMessages.length];
-  msgIndex++;
+    noBtn.style.display = "none";
+  }
 });
 
-// Yes button
 yesBtn.addEventListener("click", () => {
   document.body.innerHTML = `
     <div style="
@@ -158,11 +125,10 @@ yesBtn.addEventListener("click", () => {
       color:white;
       text-align:center;
       flex-direction:column;">
-      <h1>YAYYY 💕😍<br>You just made me the happiest person ever!</h1>
-      <h2>Happy Valentine’s Day 💖</h2>
+      <h1>Yayyy 💕😍</h1>
+      <h2>You just made me the happiest person ever!</h2>
     </div>
   `;
-  startConfetti();
 });
 
 // Floating hearts
@@ -173,22 +139,10 @@ function createHeart() {
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = (Math.random() * 20 + 10) + "px";
   document.body.appendChild(heart);
+
   setTimeout(() => heart.remove(), 6000);
 }
 setInterval(createHeart, 300);
-
-// Confetti
-function startConfetti() {
-  for (let i = 0; i < 150; i++) {
-    const confetti = document.createElement("div");
-    confetti.classList.add("confetti");
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.background = ["#ff4b7d","#ffd700","#00eaff","#7CFF00"][Math.floor(Math.random()*4)];
-    confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 3000);
-  }
-}
 </script>
 
 </body>
