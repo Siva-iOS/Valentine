@@ -36,6 +36,7 @@ button{
  cursor:pointer;
  margin:8px;
  font-size:16px;
+ transition:0.3s;
 }
 .yes{background:#ff4081;color:white;}
 .no{background:#eee;}
@@ -127,15 +128,13 @@ button{
 </div>
 
 <script>
-let stage = 0; 
-// 0 = nothing opened
-// 1 = Gift1 first done
-// 2 = Gift2 first done
-// 3 = Gift1 second done
-// 4 = Gift2 second done (Gift3 unlock)
+let stage = 0;
+let yesSize = 1;
 
 noBtn.onclick=()=>{
- question.innerText="No option illa Chubiii 😏";
+ yesSize += 0.2;
+ yesBtn.style.transform = `scale(${yesSize})`;
+ question.innerText="Come on Chubiii… you know the answer 😏💖";
 };
 
 yesBtn.onclick=()=>{
@@ -209,7 +208,7 @@ function openGift(n){
 
  if(n==3){
    if(stage<4){
-     showToast("First finish Gift 1 & 2 😜")
+     showToast("First finish Gift 1 & 2 😜");
    }
    else{
      showModal(`
