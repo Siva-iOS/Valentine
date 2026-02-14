@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Valentine ❤️</title>
+<title>For Chubiii ❤️</title>
 
 <style>
 body{
     margin:0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI', sans-serif;
     background:#f4e7da;
     display:flex;
     justify-content:center;
@@ -18,7 +18,7 @@ body{
 
 .card{
     background:#ffd6e8;
-    width:350px;
+    width:360px;
     padding:30px;
     border-radius:20px;
     text-align:center;
@@ -42,6 +42,7 @@ button{
     cursor:pointer;
     margin:5px;
     font-weight:bold;
+    transition:0.3s;
 }
 
 .yes{
@@ -63,11 +64,46 @@ button{
     border-radius:15px;
     margin:8px 0;
     cursor:pointer;
+    transition:0.3s;
 }
 
-.error{
+.gift-box:hover{
+    background:#ffe9f2;
+}
+
+/* Love Letter Modal */
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    display:none;
+}
+
+.letter{
+    background:white;
+    padding:25px;
+    width:300px;
+    border-radius:15px;
+    text-align:left;
+    animation:fadeIn 0.3s ease-in-out;
+}
+
+.close-btn{
+    text-align:right;
+    font-size:18px;
+    cursor:pointer;
     color:red;
-    font-size:14px;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:scale(0.8);}
+    to{opacity:1; transform:scale(1);}
 }
 </style>
 </head>
@@ -77,15 +113,17 @@ button{
 
 <!-- SECTION 1 - Proposal -->
 <div id="proposal">
-    <img id="mainGif" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
-    <h2 id="question">Will you be mine? 🥺</h2>
+    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+    <h2 id="question">
+        Hey <span style="color:#ff4081;">Chubiii</span>, will you be my Valentine? 💖
+    </h2>
     <button id="yesBtn" class="yes">Yes ❤️</button>
     <button id="noBtn" class="no">No</button>
 </div>
 
 <!-- SECTION 2 - Success -->
 <div id="success" class="hidden">
-    <h2>Happy Valentine Day Baby 💍</h2>
+    <h2>Happy Valentine Day Chubiii 💍</h2>
     <button onclick="showGifts()" class="yes">See My Gifts 🎁</button>
 </div>
 
@@ -93,34 +131,26 @@ button{
 <div id="gifts" class="hidden">
     <h2>Something for You 💖</h2>
 
-    <div class="gift-box" onclick="openGift(1)">🎁 Gift 1</div>
-    <div class="gift-box" onclick="openGift(2)">🎁 Gift 2</div>
-    <div class="gift-box" onclick="openGift(3)">🎁 Gift 3</div>
-
-    <button onclick="showQuiz()" class="yes">Finally →</button>
+    <div class="gift-box" onclick="openLetter(1)">🎁 Gift 1</div>
+    <div class="gift-box" onclick="openLetter(2)">🎁 Gift 2</div>
+    <div class="gift-box" onclick="openLetter(3)">🎁 Gift 3</div>
 </div>
 
-<!-- SECTION 4 - Quiz -->
-<div id="quiz" class="hidden">
-    <h2 id="quizQuestion">Who is the absolute Boss? 😎</h2>
+</div>
 
-    <div id="options">
-        <label><input type="radio" name="q" value="me"> Me 😌</label><br>
-        <label><input type="radio" name="q" value="you"> You 👑</label>
+<!-- LOVE LETTER MODAL -->
+<div id="letterModal" class="modal">
+    <div class="letter">
+        <div class="close-btn" onclick="closeLetter()">✖</div>
+        <div id="letterContent"></div>
     </div>
-
-    <div class="error" id="errorMsg"></div>
-
-    <button onclick="submitAnswer()" class="yes">Submit</button>
-</div>
-
 </div>
 
 <script>
 let noTexts = [
     "Think again 😭",
     "Are you sure 😡?",
-    "See This 🥺",
+    "Pleaseee Chubiii 🥺",
     "Last chance 😢"
 ];
 
@@ -130,15 +160,14 @@ let yesSize = 16;
 let noBtn = document.getElementById("noBtn");
 let yesBtn = document.getElementById("yesBtn");
 let question = document.getElementById("question");
-let mainGif = document.getElementById("mainGif");
 
 noBtn.addEventListener("click", function(){
     if(clickCount < noTexts.length){
-        question.innerText = noTexts[clickCount];
+        question.innerHTML = noTexts[clickCount];
     }
     yesSize += 8;
     yesBtn.style.fontSize = yesSize + "px";
-    yesBtn.style.padding = "10px " + (yesSize) + "px";
+    yesBtn.style.padding = "10px " + yesSize + "px";
     clickCount++;
 });
 
@@ -152,45 +181,37 @@ function showGifts(){
     document.getElementById("gifts").classList.remove("hidden");
 }
 
-function openGift(num){
-    alert("You opened Gift " + num + " 💖\n\n(You can customize this message!)");
-}
+function openLetter(num){
+    let content = "";
 
-function showQuiz(){
-    document.getElementById("gifts").classList.add("hidden");
-    document.getElementById("quiz").classList.remove("hidden");
-}
-
-let currentQuestion = 1;
-
-function submitAnswer(){
-    let selected = document.querySelector('input[name="q"]:checked');
-    let error = document.getElementById("errorMsg");
-
-    if(!selected){
-        error.innerText = "Oops, please select an answer.";
-        return;
+    if(num === 1){
+        content = `
+        <h3>My Sweet Chubiii 💕</h3>
+        <p>From the day you came into my life, everything became brighter.
+        Your smile makes my heart melt every single time.</p>
+        `;
+    }
+    if(num === 2){
+        content = `
+        <h3>To My Forever 💌</h3>
+        <p>Chubiii, you are my safe place, my happiness,
+        and the most beautiful chapter of my life.</p>
+        `;
+    }
+    if(num === 3){
+        content = `
+        <h3>My Heart 💖</h3>
+        <p>I promise to stand by you, love you, and annoy you forever.
+        You are my today and all my tomorrows. ❤️</p>
+        `;
     }
 
-    if(currentQuestion === 1){
-        if(selected.value === "you"){
-            currentQuestion = 2;
-            document.getElementById("quizQuestion").innerText = "Who fights a lot? 😂";
-            document.getElementById("options").innerHTML = `
-                <label><input type="radio" name="q" value="me"> Me 🙈</label><br>
-                <label><input type="radio" name="q" value="you"> You 😝</label>
-            `;
-            error.innerText = "";
-        }else{
-            error.innerText = "Oops, please try again 😏";
-        }
-    }else{
-        if(selected.value === "you"){
-            alert("Correct again! 😍 You win my heart forever 💖");
-        }else{
-            error.innerText = "Oops, try again 😜";
-        }
-    }
+    document.getElementById("letterContent").innerHTML = content;
+    document.getElementById("letterModal").style.display = "flex";
+}
+
+function closeLetter(){
+    document.getElementById("letterModal").style.display = "none";
 }
 </script>
 
