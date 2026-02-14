@@ -141,20 +141,20 @@ noBtn.onclick=()=>{
 yesBtn.onclick=()=>{
  proposal.classList.add("hidden");
  success.classList.remove("hidden");
- showToast("Start with Gift 1 Chubiii 🎁");
+ showToast("Start with Gift 1 🎁");
 };
 
 function openGift(n){
 
  if(n==1){
    if(stage==0){
-     showModal("😜 Idhula onnum illa… next gift ku po Chubiii");
+     showModal("😜 Idhula onnum illa… next gift ku po");
      showToast("Now try Gift 2 👉");
      stage=1;
    }
    else if(stage==2){
      showModal("<h3>My Dear Chubiii ❤️</h3><p>Un smile dhan enakku daily motivation 😘<br>You are my always and forever 💖</p>");
-     showToast("Now open Gift 2 again Chubiii 💝");
+     showToast("Now open Gift 2 again 💝");
      stage=3;
    }
    else{
@@ -164,16 +164,17 @@ function openGift(n){
 
  if(n==2){
    if(stage==0){
-     showToast("First open Gift 1 Chubiii 😒");
+     showToast("First open Gift 1 
+               😒");
    }
    else if(stage==1){
-     showModal("😆 Cha.. unna poi empty ah yemathuvena? Go back to Gift 1 Chubiii");
+     showModal("😆 Cha.. unna poi empty ah yemathuvena? Go back to Gift 1");
      showToast("Go back to Gift 1 🔁");
      stage=2;
    }
    else if(stage==3){
      showModal(`
-     <h3>Our Cute Memories Chubiii 📸</h3>
+     <h3>Ammu Dai, Our Cute Memories 📸</h3>
      <div class="collage">
        <img src="pic1.jpg">
        <img src="pic2.jpg">
@@ -182,29 +183,29 @@ function openGift(n){
        <img src="pic5.jpg">
        <img src="pic6.jpg">
      </div>
-     <p>You make every moment beautiful Chubiii 💕</p>
+     <p>You make every moment beautiful 💕</p>
      `);
      showToast("Gift 3 unlocked Chubiii 🎥");
      stage=4;
    }
    else{
-     showToast("Go back to Gift 1 again Chubiii 😘");
+     showToast("Go back to Gift 1 again 😘");
    }
  }
 
  if(n==3){
    if(stage<4){
-     showToast("First finish Gift 1 & 2 Chubiii 😜");
+     showToast("First finish Gift 1 & 2 😜")
    }
    else{
      showModal(`
-     <h3>Our Forever Memories Chubiii 🎥❤️</h3>
+     <h3>Our Forever Memories 🎥❤️</h3>
      <video controls style="width:100%;border-radius:12px;">
        <source src="video1.mp4" type="video/mp4">
      </video>
-     <p>With you, every memory becomes magic ✨<br>I love you forever Chubiii 💖</p>
+     <p>With you, every memory becomes magic ✨<br>I love you forever 💖</p>
      `);
-     showToast("Best gift for you Chubiii 😍");
+     showToast("Best gift for you 😍");
    }
  }
 }
