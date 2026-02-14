@@ -12,79 +12,75 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    background: #ffe6f0;
     font-family: 'Comic Sans MS', cursive;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
     text-align: center;
-    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    width: 350px;
 }
 
 h1 {
-    color: white;
-    font-size: 3rem;
-    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    color: #ff4d88;
 }
 
 .gif {
-    width: 250px;
-    margin: 20px 0;
-}
-
-.buttons {
-    margin-top: 20px;
+    width: 200px;
+    margin: 15px 0;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 20px;
+    padding: 12px 25px;
+    font-size: 18px;
     border: none;
-    border-radius: 30px;
+    border-radius: 25px;
     cursor: pointer;
-    margin: 10px;
+    margin: 8px;
     transition: 0.3s;
 }
 
 #yesBtn {
-    background-color: #ff0055;
+    background-color: #ff1e66;
     color: white;
 }
 
 #noBtn {
-    background-color: white;
-    color: black;
+    background-color: #ddd;
 }
 
 .final-message {
     display: none;
-    font-size: 2rem;
-    color: white;
-    margin-top: 20px;
+    font-size: 22px;
+    color: #ff1e66;
+    margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<h1 id="question">Will You Be My Valentine? 💖</h1>
+<div class="card">
+    <h1 id="question">Will You Be My Valentine? 💖</h1>
 
-<!-- Cute GIF -->
-<img id="cuteGif" class="gif"
-src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
-alt="cute gif">
+    <!-- Cute GIF -->
+    <img id="cuteGif" class="gif"
+    src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+    alt="cute gif">
 
-<div class="buttons">
-    <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 😢</button>
+    <div>
+        <button id="yesBtn">Yes 💕</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+
+    <div class="final-message" id="finalMessage">
+        YAYYY 😍💘 You made me the happiest!!
+    </div>
 </div>
-
-<div class="final-message" id="finalMessage">
-    YAYYYYY 😍💘 I LOVE YOUUUUUU 💞
-</div>
-
-<!-- Background Music -->
-<audio id="bgMusic" loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 let yesBtn = document.getElementById("yesBtn");
@@ -92,32 +88,31 @@ let noBtn = document.getElementById("noBtn");
 let question = document.getElementById("question");
 let finalMessage = document.getElementById("finalMessage");
 let gif = document.getElementById("cuteGif");
-let music = document.getElementById("bgMusic");
 
-let size = 20;
+let size = 18;
 
 let noMessages = [
     "Are you sure? 🥺",
     "Really sure?? 😭",
     "Think again 💔",
-    "You're breaking my heart 😢",
-    "Pleaseeeee 😭💘",
+    "Pleaseee 🥹",
+    "Don't do this 😢",
     "Last chance 😳"
 ];
 
 let clickCount = 0;
 
 noBtn.addEventListener("click", function() {
-    size += 10;
+    size += 8;
     yesBtn.style.fontSize = size + "px";
     yesBtn.style.padding = (size/2) + "px " + size + "px";
-    
+
     if (clickCount < noMessages.length) {
         noBtn.innerText = noMessages[clickCount];
     } else {
         noBtn.innerText = "Okay fine 😭";
     }
-    
+
     clickCount++;
 });
 
@@ -127,7 +122,6 @@ yesBtn.addEventListener("click", function() {
     yesBtn.style.display = "none";
     gif.src = "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif";
     finalMessage.style.display = "block";
-    music.play();
 });
 </script>
 
