@@ -3,177 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Chubiii 💖</title>
+<title>For My Love 💖</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 body{
-    margin:0;
-    font-family:'Pacifico', cursive;
-    background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    overflow:hidden;
-}
-
-/* Floating Hearts */
-.heart{
-    position:absolute;
-    font-size:20px;
-    animation:floatUp 6s linear infinite;
-    opacity:0.6;
-}
-@keyframes floatUp{
-    0%{transform:translateY(100vh); opacity:0;}
-    20%{opacity:1;}
-    100%{transform:translateY(-10vh); opacity:0;}
+ margin:0;
+ font-family:'Pacifico', cursive;
+ background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ height:100vh;
+ overflow:hidden;
 }
 
 .card{
-    background:white;
-    width:360px;
-    padding:30px;
-    border-radius:25px;
-    text-align:center;
-    box-shadow:0 15px 40px rgba(0,0,0,0.2);
-    position:relative;
-    transition:0.5s;
-}
-
-h2{
-    margin:15px 0;
-    color:#ff4081;
-}
-
-img{
-    width:160px;
-    margin-bottom:10px;
+ background:white;
+ width:90%;
+ max-width:360px;
+ padding:25px;
+ border-radius:25px;
+ text-align:center;
+ box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
 button{
-    padding:12px 25px;
-    border:none;
-    border-radius:25px;
-    cursor:pointer;
-    margin:8px;
-    font-size:16px;
-    transition:0.3s;
+ padding:12px 25px;
+ border:none;
+ border-radius:25px;
+ cursor:pointer;
+ margin:8px;
+ font-size:16px;
+}
+.yes{background:#ff4081;color:white;}
+.no{background:#eee;}
+.hidden{display:none;}
+
+.gift{
+ background:#ffe6f0;
+ padding:15px;
+ border-radius:15px;
+ margin:10px 0;
+ cursor:pointer;
 }
 
-.yes{
-    background:#ff4081;
-    color:white;
-    box-shadow:0 0 10px #ff4081;
-}
-
-.yes:hover{
-    transform:scale(1.1);
-}
-
-.no{
-    background:#f1f1f1;
-}
-
-.hidden{
-    display:none;
-}
-
-.letter-box{
-    background:#ffe6f0;
-    padding:15px;
-    border-radius:15px;
-    margin:10px 0;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.letter-box:hover{
-    transform:scale(1.05);
-    background:#ffd1dc;
-}
-
-/* Toast */
 .toast{
-    position:fixed;
-    bottom:30px;
-    background:#ff4081;
-    color:white;
-    padding:12px 20px;
-    border-radius:25px;
-    opacity:0;
-    transition:0.5s;
-}
-
-/* Confetti */
-.confetti{
-    position:fixed;
-    width:10px;
-    height:10px;
-    background:red;
-    top:0;
-    animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(100vh) rotate(720deg);
-        opacity:0;
-    }
+ position:fixed;
+ bottom:20px;
+ background:#ff4081;
+ color:white;
+ padding:10px 18px;
+ border-radius:20px;
+ opacity:0;
+ transition:0.5s;
 }
 
 /* Modal */
 .modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.5);
-    display:none;
-    justify-content:center;
-    align-items:center;
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,0.6);
+ display:none;
+ justify-content:center;
+ align-items:center;
+ z-index:10;
 }
-
 .letter{
-    background:white;
-    padding:25px;
-    width:320px;
-    border-radius:20px;
-    animation:pop 0.3s ease;
-    max-height:80vh;
-    overflow-y:auto;
+ background:white;
+ padding:20px;
+ width:90%;
+ max-width:330px;
+ border-radius:20px;
+ max-height:85vh;
+ overflow-y:auto;
 }
-
-@keyframes pop{
-    from{transform:scale(0.7);}
-    to{transform:scale(1);}
-}
-
-.close{
-    text-align:right;
-    cursor:pointer;
-    color:red;
-}
+.close{text-align:right;color:red;cursor:pointer}
 
 /* Collage */
 .collage{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
-    margin-top:10px;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
 }
-
 .collage img{
-    width:100%;
-    border-radius:18px;
-    box-shadow:0 8px 15px rgba(255,64,129,0.4);
-    transition:0.4s ease;
-    cursor:pointer;
+ width:100%;
+ border-radius:15px;
+ box-shadow:0 0 10px pink;
+ transition:0.3s;
 }
-
 .collage img:hover{
-    transform:scale(1.08) rotate(2deg);
-    box-shadow:0 0 20px #ff4081;
+ transform:scale(1.05);
 }
 </style>
 </head>
@@ -182,22 +103,16 @@ button{
 <div class="card">
 
 <div id="proposal">
-<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
-<h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
+<h2 id="question">Will you be my Valentine? 💖</h2>
 <button id="yesBtn" class="yes">Yes ❤️</button>
 <button id="noBtn" class="no">No</button>
 </div>
 
 <div id="success" class="hidden">
-<h2>Happy Valentine Chubiii 💍</h2>
-<button onclick="showLetters()" class="yes">See My Love Letters 💌</button>
-</div>
-
-<div id="letters" class="hidden">
-<h2>For You 💕</h2>
-<div class="letter-box" onclick="openLetter(1)">💌 Love Letter 1</div>
-<div class="letter-box" onclick="openLetter(2)">💌 Love Letter 2</div>
-<div class="letter-box" onclick="openLetter(3)">💌 Love Letter 3</div>
+<h2>Open Your Gifts 🎁</h2>
+<div class="gift" onclick="openGift(1)">🎁 Gift 1</div>
+<div class="gift" onclick="openGift(2)">🎁 Gift 2</div>
+<div class="gift" onclick="openGift(3)">🎁 Gift 3</div>
 </div>
 
 </div>
@@ -206,109 +121,106 @@ button{
 
 <div id="modal" class="modal">
 <div class="letter">
-<div class="close" onclick="closeLetter()">✖</div>
-<div id="letterContent"></div>
+<div class="close" onclick="closeGift()">✖</div>
+<div id="giftContent"></div>
 </div>
 </div>
 
 <script>
-/* Floating Hearts */
-setInterval(()=>{
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-    heart.style.left=Math.random()*100+"vw";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
-},800);
+let gift1Count=0;
+let gift2Count=0;
 
-/* Proposal Logic */
-let noTexts=["Think again 😭","Are you sure 😡?","Pleaseee 🥺","Last chance 😢"];
-let count=0;
-let size=16;
+noBtn.onclick=()=>{
+ question.innerText="No option not allowed 😏";
+};
 
-noBtn.onclick=function(){
-    if(count<noTexts.length){
-        question.innerText=noTexts[count];
-    }
-    size+=8;
-    yesBtn.style.fontSize=size+"px";
-    count++;
+yesBtn.onclick=()=>{
+ proposal.classList.add("hidden");
+ success.classList.remove("hidden");
+ showToast("Start with Gift 1 🎁");
+};
+
+function openGift(n){
+
+ if(n==1){
+   gift1Count++;
+
+   if(gift1Count==1){
+     showModal("😜 Idhula onnum illa… next gift ku po");
+     showToast("Try Gift 2 now 👉");
+   }
+   else if(gift1Count==2 && gift2Count>=1){
+     showModal("<h3>My Love ❤️</h3><p>Un smile dhan enakku daily motivation 😘<br>You are my always 💖</p>");
+     showToast("Now open Gift 2 again 💝");
+   }
+   else{
+     showToast("First open Gift 2 😏");
+   }
+ }
+
+ if(n==2){
+   if(gift1Count<1){
+     showToast("First open Gift 1 😒");
+     return;
+   }
+
+   gift2Count++;
+
+   if(gift2Count==1){
+     showModal("😆 Cha.. unna poi empty ah yemathuvena? Go back to Gift 1");
+     showToast("Go back to Gift 1 🔁");
+   }
+   else if(gift2Count==2 && gift1Count>=2){
+     showModal(`
+     <h3>Our Cute Memories 📸</h3>
+     <div class="collage">
+       <img src="pic1.jpg">
+       <img src="pic2.jpg">
+       <img src="pic3.jpg">
+       <img src="pic4.jpg">
+       <img src="pic5.jpg">
+       <img src="pic6.jpg">
+     </div>
+     <p>You make every moment beautiful 💕</p>
+     `);
+     showToast("Now Gift 3 is unlocked 🎥");
+   }
+   else{
+     showToast("Go to Gift 1 again 😘");
+   }
+ }
+
+ if(n==3){
+   if(!(gift1Count>=2 && gift2Count>=2)){
+     showToast("First complete Gift 1 & 2 😜");
+     return;
+   }
+
+   showModal(`
+   <h3>Our Forever Memories 🎥❤️</h3>
+   <video controls style="width:100%;border-radius:12px;">
+     <source src="video1.mp4" type="video/mp4">
+   </video>
+   <p>With you, every memory becomes magic ✨<br>I love you forever 💖</p>
+   `);
+   showToast("Best gift unlocked 😍");
+ }
 }
 
-/* YES */
-yesBtn.onclick=function(){
-    launchConfetti();
-    showToast("She said YESSSS 😍💖");
-    proposal.classList.add("hidden");
-    success.classList.remove("hidden");
+function showModal(txt){
+ giftContent.innerHTML=txt;
+ modal.style.display="flex";
 }
 
-/* Confetti */
-function launchConfetti(){
-    for(let i=0;i<80;i++){
-        let c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=Math.random()*100+"vw";
-        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
-    }
+function closeGift(){
+ modal.style.display="none";
 }
 
-/* Toast */
 function showToast(msg){
-    let toast=document.getElementById("toast");
-    toast.innerText=msg;
-    toast.style.opacity=1;
-    setTimeout(()=>toast.style.opacity=0,3000);
-}
-
-/* Letters */
-function showLetters(){
-    success.classList.add("hidden");
-    letters.classList.remove("hidden");
-}
-
-function openLetter(n){
-    let text="";
-
-    if(n==1){
-        text="<h3>My Sweet Chubiii 💕</h3><p>You make my life magical.</p>";
-    }
-
-    if(n==2){
-        text="<h3>To My Forever 💌</h3><p>I’m so lucky to have you.</p>";
-    }
-
-    if(n==3){
-        text = `
-        <h3 style="color:#ff4081;">Our Memories 🎥💖</h3>
-        <p>These moments with you mean everything to me 💕</p>
-
-        <div class="collage">
-            <img src="pic1.jpg">
-            <img src="pic2.jpg">
-            <img src="pic3.jpg">
-            <img src="pic4.jpg">
-        </div>
-
-        <video controls autoplay loop muted
-        style="width:100%; margin-top:12px; border-radius:15px; box-shadow:0 0 15px #ff4081;">
-            <source src="video1.mp4" type="video/mp4">
-            Your browser does not support video.
-        </video>
-
-        <p style="margin-top:10px;">You are my today and all of my tomorrows 💖</p>
-        `;
-    }
-
-    letterContent.innerHTML=text;
-    modal.style.display="flex";
-}
-
-function closeLetter(){
-    modal.style.display="none";
+ let t=document.getElementById("toast");
+ t.innerText=msg;
+ t.style.opacity=1;
+ setTimeout(()=>t.style.opacity=0,2500);
 }
 </script>
 
