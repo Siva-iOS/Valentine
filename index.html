@@ -137,9 +137,11 @@ button{
 .letter{
     background:white;
     padding:25px;
-    width:300px;
+    width:320px;
     border-radius:20px;
     animation:pop 0.3s ease;
+    max-height:80vh;
+    overflow-y:auto;
 }
 
 @keyframes pop{
@@ -151,6 +153,27 @@ button{
     text-align:right;
     cursor:pointer;
     color:red;
+}
+
+/* Collage */
+.collage{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:10px;
+}
+
+.collage img{
+    width:100%;
+    border-radius:18px;
+    box-shadow:0 8px 15px rgba(255,64,129,0.4);
+    transition:0.4s ease;
+    cursor:pointer;
+}
+
+.collage img:hover{
+    transform:scale(1.08) rotate(2deg);
+    box-shadow:0 0 20px #ff4081;
 }
 </style>
 </head>
@@ -189,7 +212,7 @@ button{
 </div>
 
 <script>
-/* Floating Hearts Generator */
+/* Floating Hearts */
 setInterval(()=>{
     let heart=document.createElement("div");
     heart.className="heart";
@@ -213,12 +236,12 @@ noBtn.onclick=function(){
     count++;
 }
 
-/* YES CLICK */
+/* YES */
 yesBtn.onclick=function(){
     launchConfetti();
     showToast("She said YESSSS 😍💖");
-    document.getElementById("proposal").classList.add("hidden");
-    document.getElementById("success").classList.remove("hidden");
+    proposal.classList.add("hidden");
+    success.classList.remove("hidden");
 }
 
 /* Confetti */
@@ -243,15 +266,43 @@ function showToast(msg){
 
 /* Letters */
 function showLetters(){
-    document.getElementById("success").classList.add("hidden");
-    document.getElementById("letters").classList.remove("hidden");
+    success.classList.add("hidden");
+    letters.classList.remove("hidden");
 }
 
 function openLetter(n){
     let text="";
-    if(n==1) text="<h3>My Sweet Chubiii 💕</h3><p>You make my life magical.</p>";
-    if(n==2) text="<h3>To My Forever 💌</h3><p>I’m so lucky to have you.</p>";
-    if(n==3) text="<h3>My Heart 💖</h3><p>You are my always and forever.</p>";
+
+    if(n==1){
+        text="<h3>My Sweet Chubiii 💕</h3><p>You make my life magical.</p>";
+    }
+
+    if(n==2){
+        text="<h3>To My Forever 💌</h3><p>I’m so lucky to have you.</p>";
+    }
+
+    if(n==3){
+        text = `
+        <h3 style="color:#ff4081;">Our Memories 🎥💖</h3>
+        <p>These moments with you mean everything to me 💕</p>
+
+        <div class="collage">
+            <img src="pic1.jpg">
+            <img src="pic2.jpg">
+            <img src="pic3.jpg">
+            <img src="pic4.jpg">
+        </div>
+
+        <video controls autoplay loop muted
+        style="width:100%; margin-top:12px; border-radius:15px; box-shadow:0 0 15px #ff4081;">
+            <source src="video1.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
+
+        <p style="margin-top:10px;">You are my today and all of my tomorrows 💖</p>
+        `;
+    }
+
     letterContent.innerHTML=text;
     modal.style.display="flex";
 }
