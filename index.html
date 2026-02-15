@@ -111,11 +111,6 @@ text-align:center;
 width:100%;
 border-radius:8px;
 }
-.caption{
-font-size:12px;
-margin-top:4px;
-color:#ff4081;
-}
 
 .love-card{
 background:#fff;
@@ -140,7 +135,7 @@ line-height:1.6;
 <div class="card">
 
 <div id="proposal">
-<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="150">
+<img id="gifImg" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="150">
 <h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
 <button id="yesBtn" class="yes">Yes ❤️</button>
 <button id="noBtn" class="no">No</button>
@@ -172,6 +167,7 @@ const proposal = document.getElementById("proposal");
 const success = document.getElementById("success");
 const modal = document.getElementById("modal");
 const letterContent = document.getElementById("letterContent");
+const gifImg = document.getElementById("gifImg");
 
 /* Floating hearts */
 setInterval(()=>{
@@ -185,12 +181,19 @@ setTimeout(()=>heart.remove(),6000);
 
 /* NO button */
 let noTexts=["Think again 😭","Are you sure 😡?","Pleaseee 🥺","Last chance 😢"];
+let gifs=[
+"https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+"https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
+"https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
+"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+];
 let count=0;
 let size=16;
 
 noBtn.onclick=function(){
 if(count<noTexts.length){
 question.innerText=noTexts[count];
+gifImg.src=gifs[count];
 }
 size+=10;
 yesBtn.style.fontSize=size+"px";
@@ -205,17 +208,14 @@ showToast("Start with Gift 1 💝");
 }
 
 /* Gift logic */
-let stage=0; // 0→1→2→3→4→5 free
+let stage=0;
 
 function openGift(n){
-
-/* FREE MODE */
 if(stage>=5){
 openFreeGift(n);
 return;
 }
 
-/* GIFT 1 */
 if(n==1){
 if(stage==0){
 showModal("😜 Idhula onnum illa… next gift ku po");
@@ -225,12 +225,9 @@ else if(stage==2){
 showRomanticLetter();
 stage=3;
 }
-else{
-showToast("Follow the order 😏");
-}
+else showToast("Follow the order 😏");
 }
 
-/* GIFT 2 */
 if(n==2){
 if(stage==1){
 showModal("😆 Cha… empty nu nenacha? Gift 1 ku thirumba po");
@@ -240,38 +237,32 @@ else if(stage==3){
 showPhotoCollage();
 stage=4;
 }
-else{
-showToast("Open Gift 1 first 😜");
-}
+else showToast("Open Gift 1 first 😜");
 }
 
-/* GIFT 3 */
 if(n==3){
-if(stage<4){
-showToast("Finish Gift 1 & 2 first 😏");
-}
+if(stage<4) showToast("Finish Gift 1 & 2 first 😏");
 else{
 showVideoGift();
 stage=5;
-showToast("Now all gifts are unlocked 💖");
+showToast("All gifts unlocked 💖");
 }
 }
 }
 
-/* FREE OPEN */
 function openFreeGift(n){
 if(n==1) showRomanticLetter();
 if(n==2) showPhotoCollage();
 if(n==3) showVideoGift();
 }
 
-/* CONTENT FUNCTIONS */
+/* CONTENT */
 function showRomanticLetter(){
 showModal(`
 <div class="love-card">
 <h3>My Love 💖</h3>
 <p>
-My Chubiii,<br><br>
+Ammu Dai,<br><br>
 From the moment you came into my life, everything became brighter.  
 Your smile is my favorite view, your voice is my favorite sound,  
 and your love is my favorite feeling. 💕<br><br>
@@ -281,11 +272,11 @@ my heart will always look for you first.
 You are my safe place, my happiness, my forever. 🥺❤️<br><br>
 
 I don’t want a perfect world…  
-I just want a world where it’s always *you and me*.  
+I just want a world where it’s always <b>you and me</b>.  
 Holding hands, growing old, loving each other every single day. 💍<br><br>
 
-Forever yours,  
-<br>❤️
+Yours Lovingly,<br>
+<b>Sivuuu ♥️</b>
 </p>
 </div>
 `);
