@@ -54,7 +54,8 @@ transition:0.3s;
 }
 
 .yes{background:#ff4081;color:white;}
-.no{background:#b0b0b0;color:black;} /* changed NO color */
+.no{background:#b3e5fc;} /* different color for NO */
+
 .hidden{display:none;}
 
 .gift-box{
@@ -136,8 +137,7 @@ text-align:left;
 </div>
 
 <div id="success" class="hidden">
-<h2>Happy Valentine Chubiii 💍</h2>
-<h3>Thank you for choosing me ☺️💖</h3>
+<h2>Thank you for choosing me ☺️<br>Happy Valentine 💖</h2>
 <div class="gift-box" onclick="openGift(1)">🎁 Gift 1</div>
 <div class="gift-box" onclick="openGift(2)">🎁 Gift 2</div>
 <div class="gift-box" onclick="openGift(3)">🎁 Gift 3</div>
@@ -179,15 +179,15 @@ setTimeout(()=>h.remove(),6000);
 let noTexts = [
   "Think again 😭",
   "Are you sure 😡?",
-  "See this 😏",
+  "No way 😆",
   "Last chance 😢"
 ];
 
 let gifs = [
+  "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
   "https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
   "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
-  "https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif",
-  "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+  "https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif"
 ];
 
 let count = 0;
@@ -207,9 +207,12 @@ noBtn.onclick = function(){
   noBtn.style.position = "relative";
   noBtn.style.zIndex = "1";
 
+  question.style.position="relative";
+  question.style.zIndex="20";
+
   if(count >= 2){
     yesBtn.style.transform = "scale(1.8)";
-    noBtn.style.opacity = "0"; 
+    noBtn.style.opacity = "0";
   }
 
   count++;
@@ -217,18 +220,9 @@ noBtn.onclick = function(){
 
 /* YES button */
 yesBtn.onclick=function(){
-heartBurst();
-launchConfetti();
-
-card.style.transform="scale(1.1)";
-card.style.boxShadow="0 0 30px #ff4081";
-
-setTimeout(()=>{
 proposal.classList.add("hidden");
 success.classList.remove("hidden");
-card.style.transform="scale(1)";
-},1200);
-}
+};
 
 /* Gift logic */
 let stage=0;
@@ -308,38 +302,6 @@ showModal(`
 </video>
 <p>My forever begins with you 💖</p>
 `);
-}
-
-/* Effects */
-function heartBurst(){
-for(let i=0;i<20;i++){
-let h=document.createElement("div");
-h.innerHTML="💖";
-h.style.position="fixed";
-h.style.left="50%";
-h.style.top="50%";
-h.style.transition="1s";
-document.body.appendChild(h);
-let x=(Math.random()*300)-150;
-let y=(Math.random()*300)-150;
-setTimeout(()=>{h.style.transform=`translate(${x}px,${y}px) scale(2)`;h.style.opacity=0;},10);
-setTimeout(()=>h.remove(),1000);
-}
-}
-
-function launchConfetti(){
-for(let i=0;i<50;i++){
-let c=document.createElement("div");
-c.style.position="fixed";
-c.style.width="8px";
-c.style.height="8px";
-c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-c.style.left=Math.random()*100+"vw";
-c.style.top="0";
-c.style.animation="fall 3s linear forwards";
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),3000);
-}
 }
 
 /* Modal + toast */
