@@ -6,11 +6,11 @@
 <title>For Chubiii 💖</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 body{
     margin:0;
-    font-family:'Quicksand', sans-serif;
+    font-family:'Poppins', sans-serif;
     background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
     display:flex;
     justify-content:center;
@@ -40,12 +40,38 @@ body{
     text-align:center;
     box-shadow:0 15px 40px rgba(0,0,0,0.2);
     position:relative;
-    transition:0.5s;
 }
 
-h2,h3{
-    margin:10px 0;
+/* SUCCESS TEXT ANIMATIONS */
+.success-title{
     color:#ff4081;
+    animation:heartbeat 1.8s infinite;
+}
+
+@keyframes heartbeat{
+    0%{transform:scale(1);}
+    25%{transform:scale(1.05);}
+    50%{transform:scale(1);}
+    75%{transform:scale(1.07);}
+    100%{transform:scale(1);}
+}
+
+.success-sub{
+    margin-top:10px;
+    opacity:0;
+    animation:fadeUp 1.2s ease forwards;
+    animation-delay:0.6s;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 img{
@@ -95,44 +121,6 @@ button{
     background:#ffd1dc;
 }
 
-/* Success text animation */
-.success-text{
-    animation:popGlow 1.5s ease-in-out infinite alternate;
-}
-@keyframes popGlow{
-    from{transform:scale(1); text-shadow:0 0 5px pink;}
-    to{transform:scale(1.05); text-shadow:0 0 15px hotpink;}
-}
-
-/* Toast */
-.toast{
-    position:fixed;
-    bottom:30px;
-    background:#ff4081;
-    color:white;
-    padding:12px 20px;
-    border-radius:25px;
-    opacity:0;
-    transition:0.5s;
-}
-
-/* Confetti */
-.confetti{
-    position:fixed;
-    width:10px;
-    height:10px;
-    background:red;
-    top:0;
-    animation:fall 3s linear forwards;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(100vh) rotate(720deg);
-        opacity:0;
-    }
-}
-
 /* Modal */
 .modal{
     position:fixed;
@@ -148,12 +136,6 @@ button{
     padding:25px;
     width:300px;
     border-radius:20px;
-    animation:pop 0.3s ease;
-}
-
-@keyframes pop{
-    from{transform:scale(0.7);}
-    to{transform:scale(1);}
 }
 
 .close{
@@ -161,61 +143,47 @@ button{
     cursor:pointer;
     color:red;
 }
-
-/* Collage */
-.collage{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:8px;
-}
-.collage img{
-    width:100%;
-    border-radius:12px;
-    box-shadow:0 0 8px pink;
-    transition:0.3s;
-}
-.collage img:hover{
-    transform:scale(1.08);
-}
 </style>
 </head>
 <body>
 
 <div class="card">
 
+<!-- PROPOSAL -->
 <div id="proposal">
-<img id="gifImg" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 <h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
 <button id="yesBtn" class="yes">Yes ❤️</button>
 <button id="noBtn" class="no">No</button>
 </div>
 
+<!-- SUCCESS -->
 <div id="success" class="hidden">
-<h2 class="success-text">Happy Valentine Chubiii 💍</h2>
-<h3 class="success-text">Thank you for choosing me ☺️💖</h3>
-<button onclick="showGifts()" class="yes">Open Gifts 🎁</button>
+<h2 class="success-title">Happy Valentine Chubiii 💍</h2>
+<h3 class="success-sub">Thank you for choosing me ☺️💖</h3>
+<button onclick="showLetters()" class="yes">See My Gifts 🎁</button>
 </div>
 
-<div id="gifts" class="hidden">
+<!-- GIFTS -->
+<div id="letters" class="hidden">
 <h2>For You 💕</h2>
-<div class="letter-box" onclick="openGift(1)">🎁 Gift 1</div>
-<div class="letter-box" onclick="openGift(2)">🎁 Gift 2</div>
-<div class="letter-box" onclick="openGift(3)">🎁 Gift 3</div>
+<div class="letter-box" onclick="openLetter(1)">🎁 Gift 1</div>
+<div class="letter-box" onclick="openLetter(2)">🎁 Gift 2</div>
+<div class="letter-box" onclick="openLetter(3)">🎁 Gift 3</div>
 </div>
 
 </div>
 
-<div id="toast" class="toast"></div>
-
+<!-- MODAL -->
 <div id="modal" class="modal">
 <div class="letter">
-<div class="close" onclick="closeGift()">✖</div>
-<div id="giftContent"></div>
+<div class="close" onclick="closeLetter()">✖</div>
+<div id="letterContent"></div>
 </div>
 </div>
 
 <script>
-/* Floating Hearts */
+/* Floating hearts */
 setInterval(()=>{
     let heart=document.createElement("div");
     heart.className="heart";
@@ -223,122 +191,69 @@ setInterval(()=>{
     heart.style.left=Math.random()*100+"vw";
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),6000);
-},800);
+},900);
 
 /* NO button logic */
-let noTexts=["See this 😏","Still no? 😒","Think again 😢","Last chance 😤"];
-let gifs=[
-"https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
-"https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
-"https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif",
-"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+let noTexts=[
+ "See this 😏",
+ "See this again 😼",
+ "Final warning 😈"
 ];
-let count=0;
-let size=16;
+let noGifs=[
+ "https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif",
+ "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+ "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif"
+];
 
-noBtn.onclick=function(){
-    if(count<noTexts.length){
-        question.innerText=noTexts[count];
-        gifImg.src=gifs[count];
-    }
-    size+=12;
-    yesBtn.style.fontSize=size+"px";
-    yesBtn.style.position="relative";
-    yesBtn.style.zIndex="2";
-    noBtn.style.zIndex="1";
-    count++;
+let noCount=0;
+
+noBtn.onclick=()=>{
+ if(noCount < noTexts.length){
+   question.innerHTML = `${noTexts[noCount]}<br><img src="${noGifs[noCount]}" width="140">`;
+ }
+ yesBtn.style.fontSize = "32px";
+ yesBtn.style.padding = "18px 40px";
+ noBtn.style.opacity = "0";
+ noCount++;
 };
 
 /* YES */
-yesBtn.onclick=function(){
-    launchConfetti();
-    document.getElementById("proposal").classList.add("hidden");
-    document.getElementById("success").classList.remove("hidden");
+yesBtn.onclick=()=>{
+ document.getElementById("proposal").classList.add("hidden");
+ document.getElementById("success").classList.remove("hidden");
 };
 
-/* Confetti */
-function launchConfetti(){
-    for(let i=0;i<80;i++){
-        let c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=Math.random()*100+"vw";
-        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-        document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
-    }
-}
-
 /* Gifts */
-let stage=0;
-
-function showGifts(){
-    document.getElementById("success").classList.add("hidden");
-    document.getElementById("gifts").classList.remove("hidden");
+function showLetters(){
+ document.getElementById("success").classList.add("hidden");
+ document.getElementById("letters").classList.remove("hidden");
 }
 
-function openGift(n){
-    if(n==1){
-        if(stage==0){
-            showModal("😆 Cha… idhula onnum illa… Gift 2 ku po");
-            stage=1;
-        }else{
-            showModal(`
-            <h3>Ammu Dai ❤️</h3>
-            <p>You are my sunshine and my peace.<br><br>
-            Yours Lovingly,<br>
-            Sivuuu♥️</p>
-            `);
-        }
-    }
-
-    if(n==2){
-        if(stage==1){
-            showModal("Cha cha.. na unna yemathuvena mu? Go back to gift 1");
-            stage=2;
-        }else if(stage>=2){
-            showModal(`
-            <h3>Our Memories 📸</h3>
-            <div class="collage">
-            <img src="IMG_6518_Original.jpeg">
-            <img src="IMG_7798_Original.png">
-            <img src="IMG_7825_Original.jpeg">
-            <img src="IMG_0655.jpeg">
-            <img src="IMG_0782.jpeg">
-            <img src="IMG_0535.jpeg">
-            </div>
-            `);
-        }
-    }
-
-    if(n==3){
-        if(stage<2){
-            showToast("First finish Gift 1 & 2 😜");
-        }else{
-            showModal(`
-            <h3>Our Forever 🎥</h3>
-            <video controls style="width:100%;border-radius:12px;">
-              <source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
-            </video>
-            <p>I love you always 💖</p>
-            `);
-        }
-    }
+function openLetter(n){
+ let text="";
+ if(n==1){
+   text=`<h3>Ammu Dai 💕</h3>
+   <p>My Chubiii,<br>
+   You are my comfort, my smile, my everything ❤️<br><br>
+   Yours lovingly,<br>
+   Sivuuu ♥️</p>`;
+ }
+ if(n==2){
+   text=`<h3>Our Memories 📸</h3>
+   <p>Every picture with you is my favorite moment 💖</p>`;
+ }
+ if(n==3){
+   text=`<h3>Forever Us 🎥</h3>
+   <video controls style="width:100%;border-radius:12px;">
+     <source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
+   </video>`;
+ }
+ letterContent.innerHTML=text;
+ modal.style.display="flex";
 }
 
-function showModal(txt){
-    giftContent.innerHTML=txt;
-    modal.style.display="flex";
-}
-
-function closeGift(){
-    modal.style.display="none";
-}
-
-function showToast(msg){
-    let t=document.getElementById("toast");
-    t.innerText=msg;
-    t.style.opacity=1;
-    setTimeout(()=>t.style.opacity=0,2500);
+function closeLetter(){
+ modal.style.display="none";
 }
 </script>
 
