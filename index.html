@@ -174,32 +174,50 @@ document.body.appendChild(h);
 setTimeout(()=>h.remove(),6000);
 },800);
 
-/* NO button */
-let noTexts=["Think again 😭","Are you sure 😡?","Pleaseee 🥺","Last chance 😢"];
-let gifs=[
-"https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
-"https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
-"https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
-"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+/* NO button logic */
+let noTexts = [
+  "Think again 😭",
+  "Are you sure 😡?",
+  "See this 😏",
+  "Last chance 😢"
 ];
-let count=0;
-let size=16;
 
-noBtn.onclick=function(){
-if(count<noTexts.length){
-question.innerText=noTexts[count];
-gifImg.src=gifs[count];
-}
-size+=10;
-yesBtn.style.fontSize=size+"px";
-count++;
-}
+let gifs = [
+  "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
+  "https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
+  "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
+  "https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif"
+];
+
+let count = 0;
+let size = 16;
+
+noBtn.onclick = function(){
+  if(count < noTexts.length){
+    question.innerText = noTexts[count];
+    gifImg.src = gifs[count];
+  }
+
+  size += 18;
+  yesBtn.style.fontSize = size + "px";
+
+  yesBtn.style.position = "relative";
+  yesBtn.style.zIndex = "5";
+  noBtn.style.position = "relative";
+  noBtn.style.zIndex = "1";
+
+  if(count >= 2){
+    yesBtn.style.transform = "scale(1.4)";
+  }
+
+  count++;
+};
 
 /* YES button */
 yesBtn.onclick=function(){
 heartBurst();
 launchConfetti();
-showToast("Thank you choosing me☺️");
+showToast("She said YES 😍💖");
 
 card.style.transform="scale(1.1)";
 card.style.boxShadow="0 0 30px #ff4081";
