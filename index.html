@@ -54,8 +54,7 @@ transition:0.3s;
 }
 
 .yes{background:#ff4081;color:white;}
-.no{background:#b3e5fc;} /* different color for NO */
-
+.no{background:#ffb6c1;} /* different color for NO */
 .hidden{display:none;}
 
 .gift-box{
@@ -137,7 +136,7 @@ text-align:left;
 </div>
 
 <div id="success" class="hidden">
-<h2>Thank you for choosing me ☺️<br>Happy Valentine 💖</h2>
+<h2>Happy Valentine 💖</h2>
 <div class="gift-box" onclick="openGift(1)">🎁 Gift 1</div>
 <div class="gift-box" onclick="openGift(2)">🎁 Gift 2</div>
 <div class="gift-box" onclick="openGift(3)">🎁 Gift 3</div>
@@ -179,7 +178,7 @@ setTimeout(()=>h.remove(),6000);
 let noTexts = [
   "Think again 😭",
   "Are you sure 😡?",
-  "No way 😆",
+  "No way 😏",
   "Last chance 😢"
 ];
 
@@ -207,12 +206,11 @@ noBtn.onclick = function(){
   noBtn.style.position = "relative";
   noBtn.style.zIndex = "1";
 
-  question.style.position="relative";
-  question.style.zIndex="20";
-
   if(count >= 2){
     yesBtn.style.transform = "scale(1.8)";
     noBtn.style.opacity = "0";
+    question.style.position="relative";
+    question.style.zIndex="20";
   }
 
   count++;
@@ -222,9 +220,9 @@ noBtn.onclick = function(){
 yesBtn.onclick=function(){
 proposal.classList.add("hidden");
 success.classList.remove("hidden");
-};
+}
 
-/* Gift logic */
+/* Gift logic (unchanged) */
 let stage=0;
 
 function openGift(n){
@@ -233,18 +231,15 @@ if(stage>=5){openFreeGift(n);return;}
 if(n==1){
 if(stage==0){showModal("😜 Idhula onnum illa… next gift ku po");stage=1;}
 else if(stage==2){showRomanticLetter();stage=3;}
-else showToast("Follow order 😏");
 }
 
 if(n==2){
 if(stage==1){showModal("😆 Cha cha.. na unna yemathuvena mu? Go back to Gift 1");stage=2;}
 else if(stage==3){showPhotoCollage();stage=4;}
-else showToast("Open Gift 1 first 😜");
 }
 
 if(n==3){
-if(stage<4) showToast("Finish Gift 1 & 2 first 😏");
-else{showVideoGift();stage=5;showToast("All gifts unlocked 💖");}
+if(stage>=4){showVideoGift();stage=5;}
 }
 }
 
@@ -254,7 +249,6 @@ if(n==2) showPhotoCollage();
 if(n==3) showVideoGift();
 }
 
-/* CONTENT */
 function showRomanticLetter(){
 showModal(`
 <div class="love-card">
@@ -265,13 +259,8 @@ From the moment you came into my life, everything became brighter.
 Your smile is my favorite view, your voice is my favorite sound,  
 and your love is my favorite feeling. 💕<br><br>
 
-No matter how far we go or how much time passes,  
-my heart will always look for you first.  
-You are my safe place, my happiness, my forever. 🥺❤️<br><br>
-
-I don’t want a perfect world…  
 I just want a world where it’s always <b>you and me</b>.  
-Holding hands, growing old, loving each other every single day. 💍<br><br>
+Holding hands, growing old, loving each other every day. 💍<br><br>
 
 Yours Lovingly,<br>
 <b>Sivuuu ♥️</b>
@@ -304,15 +293,8 @@ showModal(`
 `);
 }
 
-/* Modal + toast */
 function showModal(txt){letterContent.innerHTML=txt;modal.style.display="flex";}
 function closeLetter(){modal.style.display="none";}
-function showToast(msg){
-let t=document.getElementById("toast");
-t.innerText=msg;
-t.style.opacity=1;
-setTimeout(()=>t.style.opacity=0,3000);
-}
 </script>
 
 </body>
