@@ -19,7 +19,6 @@ height:100vh;
 overflow:hidden;
 }
 
-/* Floating Hearts */
 .heart{
 position:absolute;
 font-size:20px;
@@ -65,7 +64,6 @@ margin:10px 0;
 cursor:pointer;
 }
 
-/* Toast */
 .toast{
 position:fixed;
 bottom:30px;
@@ -77,7 +75,6 @@ opacity:0;
 transition:0.5s;
 }
 
-/* Modal */
 .modal{
 position:fixed;
 inset:0;
@@ -97,7 +94,6 @@ overflow:auto;
 }
 .close{text-align:right;color:red;cursor:pointer}
 
-/* Collage */
 .collage{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -121,7 +117,6 @@ margin-top:4px;
 color:#ff4081;
 }
 
-/* Love letter card */
 .love-card{
 background:#fff;
 padding:15px;
@@ -139,11 +134,11 @@ line-height:1.6;
 }
 </style>
 </head>
+
 <body>
 
 <div class="card">
 
-<!-- FIRST PAGE (UNCHANGED) -->
 <div id="proposal">
 <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="150">
 <h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
@@ -170,7 +165,16 @@ line-height:1.6;
 </div>
 
 <script>
-/* Floating Hearts */
+/* ELEMENTS */
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const question = document.getElementById("question");
+const proposal = document.getElementById("proposal");
+const success = document.getElementById("success");
+const modal = document.getElementById("modal");
+const letterContent = document.getElementById("letterContent");
+
+/* Floating hearts */
 setInterval(()=>{
 let heart=document.createElement("div");
 heart.className="heart";
@@ -180,7 +184,7 @@ document.body.appendChild(heart);
 setTimeout(()=>heart.remove(),6000);
 },800);
 
-/* Proposal Logic */
+/* NO button */
 let noTexts=["Think again 😭","Are you sure 😡?","Pleaseee 🥺","Last chance 😢"];
 let count=0;
 let size=16;
@@ -194,26 +198,20 @@ yesBtn.style.fontSize=size+"px";
 count++;
 }
 
+/* YES button */
 yesBtn.onclick=function(){
 proposal.classList.add("hidden");
 success.classList.remove("hidden");
 showToast("Start with Gift 1 💝");
 }
 
-/* Gift Logic */
-let stage=0; 
-// 0 = nothing
-// 1 = gift1 first
-// 2 = gift2 first
-// 3 = gift1 second
-// 4 = gift2 second (gift3 unlocked)
-// 5 = free mode
+/* Gift logic */
+let stage=0;
 
 function openGift(n){
 
-/* FREE MODE after all gifts */
 if(stage==5){
-openFinalGift(n);
+openFreeGift(n);
 return;
 }
 
@@ -227,11 +225,11 @@ else if(stage==2){
 showModal(`
 <div class="love-card">
 <h3>A Letter For You 💖</h3>
-<p>My Baby, <br><br>
-Thank you for being my person.  
-You are my home, my peace, my happiness.  
-No matter where life takes us,  
-my heart will always choose you. ❤️<br><br>
+<p>
+My Baby,<br><br>
+You are my peace, my happiness, my home.  
+No matter what happens, my heart will always choose you ❤️  
+<br><br>
 Forever yours 💕
 </p>
 </div>
@@ -256,4 +254,69 @@ showModal(`
 <div class="collage">
 <div class="polaroid"><img src="IMG_6518_Original.jpeg"><div class="caption">Sweet Hello</div></div>
 <div class="polaroid"><img src="IMG_7798_Original.png"><div class="caption">True Smile</div></div>
-<div class="polaroid"><img src="IMG_7825_Original.jpeg"><div class="caption">Our Moment</div></div
+<div class="polaroid"><img src="IMG_7825_Original.jpeg"><div class="caption">Our Moment</div></div>
+<div class="polaroid"><img src="IMG_0655.jpeg"><div class="caption">Only Us</div></div>
+<div class="polaroid"><img src="IMG_0782.jpeg"><div class="caption">My Home</div></div>
+<div class="polaroid"><img src="IMG_0535.jpeg"><div class="caption">Forever Us</div></div>
+</div>
+`);
+showToast("Gift 3 unlocked 🎥");
+stage=4;
+}
+else{
+showToast("Open Gift 1 first 😜");
+}
+}
+
+if(n==3){
+if(stage<4){
+showToast("Finish Gift 1 & 2 first 😏");
+}
+else{
+showModal(`
+<h3>You are my forever ❤️</h3>
+<video controls style="width:100%;border-radius:12px;">
+<source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
+</video>
+<p>I love you endlessly 💖</p>
+`);
+showToast("All gifts unlocked 🎁");
+stage=5;
+}
+}
+}
+
+function openFreeGift(n){
+if(n==1){
+showModal(`<div class="love-card"><h3>A Letter For You 💖</h3><p>You are my forever ❤️</p></div>`);
+}
+if(n==2){
+showToast("Open Gift 2 again 💕");
+}
+if(n==3){
+showModal(`
+<h3>You are my forever ❤️</h3>
+<video controls style="width:100%;border-radius:12px;">
+<source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
+</video>
+`);
+}
+}
+
+function showModal(txt){
+letterContent.innerHTML=txt;
+modal.style.display="flex";
+}
+function closeLetter(){
+modal.style.display="none";
+}
+function showToast(msg){
+let t=document.getElementById("toast");
+t.innerText=msg;
+t.style.opacity=1;
+setTimeout(()=>t.style.opacity=0,3000);
+}
+</script>
+
+</body>
+</html>
