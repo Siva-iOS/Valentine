@@ -19,18 +19,6 @@ height:100vh;
 overflow:hidden;
 }
 
-.heart{
-position:absolute;
-font-size:20px;
-animation:floatUp 6s linear infinite;
-opacity:0.6;
-}
-@keyframes floatUp{
-0%{transform:translateY(100vh);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-10vh);opacity:0;}
-}
-
 .card{
 background:white;
 width:360px;
@@ -54,8 +42,8 @@ transition:0.3s;
 }
 
 .yes{background:#ff4081;color:white;}
-/* NO button color changed from start */
-.no{background:#ffb6c1;color:white;}
+/* NO button different color */
+.no{background:#6c63ff;color:white;}
 
 .hidden{display:none;}
 
@@ -153,17 +141,7 @@ const modal=document.getElementById("modal");
 const letterContent=document.getElementById("letterContent");
 const gifImg=document.getElementById("gifImg");
 
-/* Floating hearts */
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="💖";
-h.style.left=Math.random()*100+"vw";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),6000);
-},800);
-
-/* NO button logic (REVERTED behavior) */
+/* NO button logic */
 let noTexts = [
   "Are you sure? 😳",
   "Think again 🤨",
@@ -188,11 +166,6 @@ noBtn.onclick = function(){
   size += 18;
   yesBtn.style.fontSize = size + "px";
 
-  yesBtn.style.position = "relative";
-  yesBtn.style.zIndex = "5";
-  noBtn.style.position = "relative";
-  noBtn.style.zIndex = "1";
-
   if(count >= 2){
     yesBtn.style.transform = "scale(1.4)";
   }
@@ -200,13 +173,13 @@ noBtn.onclick = function(){
   count++;
 };
 
-/* YES button */
+/* YES button → SUCCESS screen */
 yesBtn.onclick=function(){
 proposal.classList.add("hidden");
 success.classList.remove("hidden");
 }
 
-/* Gift logic */
+/* Gifts */
 let stage=0;
 
 function openGift(n){
@@ -233,7 +206,6 @@ if(n==2) showPhotoCollage();
 if(n==3) showVideoGift();
 }
 
-/* CONTENT */
 function showRomanticLetter(){
 showModal(`
 <div class="love-card">
@@ -244,12 +216,7 @@ From the moment you came into my life, everything became brighter.
 Your smile is my favorite view, your voice is my favorite sound,  
 and your love is my favorite feeling. 💕<br><br>
 
-No matter how far we go or how much time passes,  
-my heart will always look for you first.  
 You are my safe place, my happiness, my forever. 🥺❤️<br><br>
-
-I don’t want a perfect world…  
-I just want a world where it’s always <b>you and me</b>. 💍<br><br>
 
 Yours lovingly,<br>
 <b>Sivuuu ♥️</b>
@@ -265,9 +232,6 @@ showModal(`
 <div class="polaroid"><img src="IMG_6518_Original.jpeg"></div>
 <div class="polaroid"><img src="IMG_7798_Original.png"></div>
 <div class="polaroid"><img src="IMG_7825_Original.jpeg"></div>
-<div class="polaroid"><img src="IMG_0655.jpeg"></div>
-<div class="polaroid"><img src="IMG_0782.jpeg"></div>
-<div class="polaroid"><img src="IMG_0535.jpeg"></div>
 </div>
 `);
 }
