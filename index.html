@@ -120,6 +120,23 @@ font-size:12px;
 margin-top:4px;
 color:#ff4081;
 }
+
+/* Love letter card */
+.love-card{
+background:#fff;
+padding:15px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+text-align:left;
+}
+.love-card h3{
+text-align:center;
+color:#ff4081;
+}
+.love-card p{
+font-size:14px;
+line-height:1.6;
+}
 </style>
 </head>
 <body>
@@ -184,9 +201,21 @@ showToast("Start with Gift 1 💝");
 }
 
 /* Gift Logic */
-let stage=0;
+let stage=0; 
+// 0 = nothing
+// 1 = gift1 first
+// 2 = gift2 first
+// 3 = gift1 second
+// 4 = gift2 second (gift3 unlocked)
+// 5 = free mode
 
 function openGift(n){
+
+/* FREE MODE after all gifts */
+if(stage==5){
+openFinalGift(n);
+return;
+}
 
 if(n==1){
 if(stage==0){
@@ -195,12 +224,23 @@ showToast("Try Gift 2 👉");
 stage=1;
 }
 else if(stage==2){
-showModal("<h3>My Sweet Chubiii 💕</h3><p>You are my happiness, my peace, my everything 💖</p>");
-showToast("Now Gift 2 again 💝");
+showModal(`
+<div class="love-card">
+<h3>A Letter For You 💖</h3>
+<p>My Baby, <br><br>
+Thank you for being my person.  
+You are my home, my peace, my happiness.  
+No matter where life takes us,  
+my heart will always choose you. ❤️<br><br>
+Forever yours 💕
+</p>
+</div>
+`);
+showToast("Now open Gift 2 again 💝");
 stage=3;
 }
 else{
-showToast("Follow order 😏");
+showToast("Follow the order 😏");
 }
 }
 
@@ -216,52 +256,4 @@ showModal(`
 <div class="collage">
 <div class="polaroid"><img src="IMG_6518_Original.jpeg"><div class="caption">Sweet Hello</div></div>
 <div class="polaroid"><img src="IMG_7798_Original.png"><div class="caption">True Smile</div></div>
-<div class="polaroid"><img src="IMG_7825_Original.jpeg"><div class="caption">Perfect Day</div></div>
-<div class="polaroid"><img src="IMG_0655.jpeg"><div class="caption">Only Us</div></div>
-<div class="polaroid"><img src="IMG_0782.jpeg"><div class="caption">My Home</div></div>
-<div class="polaroid"><img src="IMG_0535.jpeg"><div class="caption">Forever Us</div></div>
-</div>
-<p>You make every moment beautiful 💕</p>
-`);
-showToast("Gift 3 unlocked 🎥");
-stage=4;
-}
-else{
-showToast("Open Gift 1 first 😜");
-}
-}
-
-if(n==3){
-if(stage<4){
-showToast("Finish Gift 1 & 2 first 😏");
-}
-else{
-showModal(`
-<h3>You are my forever ❤️</h3>
-<video controls style="width:100%;border-radius:12px;">
-<source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
-</video>
-<p>I love you more than words can say 💖</p>
-`);
-showToast("Best gift for you 😍");
-}
-}
-}
-
-function showModal(txt){
-letterContent.innerHTML=txt;
-modal.style.display="flex";
-}
-function closeLetter(){
-modal.style.display="none";
-}
-function showToast(msg){
-let t=document.getElementById("toast");
-t.innerText=msg;
-t.style.opacity=1;
-setTimeout(()=>t.style.opacity=0,3000);
-}
-</script>
-
-</body>
-</html>
+<div class="polaroid"><img src="IMG_7825_Original.jpeg"><div class="caption">Our Moment</div></div
