@@ -6,140 +6,201 @@
 <title>For Chubiii 💖</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
 body{
-margin:0;
-font-family:'Quicksand', sans-serif;
-background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-overflow:hidden;
+    margin:0;
+    font-family:'Quicksand', sans-serif;
+    background:linear-gradient(135deg,#ffe6f0,#ffd1dc);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
 }
 
+/* Floating Hearts */
 .heart{
-position:absolute;
-font-size:20px;
-animation:floatUp 6s linear infinite;
-opacity:0.6;
+    position:absolute;
+    font-size:20px;
+    animation:floatUp 6s linear infinite;
+    opacity:0.6;
 }
 @keyframes floatUp{
-0%{transform:translateY(100vh);opacity:0;}
-20%{opacity:1;}
-100%{transform:translateY(-10vh);opacity:0;}
+    0%{transform:translateY(100vh); opacity:0;}
+    20%{opacity:1;}
+    100%{transform:translateY(-10vh); opacity:0;}
 }
 
 .card{
-background:white;
-width:360px;
-padding:30px;
-border-radius:25px;
-text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,0.2);
-transition:0.4s;
+    background:white;
+    width:360px;
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    position:relative;
+    transition:0.5s;
 }
 
-h2{color:#ff4081;}
+h2,h3{
+    margin:10px 0;
+    color:#ff4081;
+}
+
+img{
+    width:160px;
+    margin-bottom:10px;
+}
 
 button{
-padding:12px 25px;
-border:none;
-border-radius:25px;
-cursor:pointer;
-margin:8px;
-font-size:16px;
-transition:0.3s;
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    margin:8px;
+    font-size:16px;
+    transition:0.3s;
 }
 
-.yes{background:#ff4081;color:white;}
-.no{background:#eee;}
-.hidden{display:none;}
-
-.gift-box{
-background:#ffe6f0;
-padding:15px;
-border-radius:15px;
-margin:10px 0;
-cursor:pointer;
+.yes{
+    background:#ff4081;
+    color:white;
+    box-shadow:0 0 10px #ff4081;
 }
 
+.yes:hover{
+    transform:scale(1.1);
+}
+
+.no{
+    background:#f1f1f1;
+}
+
+.hidden{
+    display:none;
+}
+
+.letter-box{
+    background:#ffe6f0;
+    padding:15px;
+    border-radius:15px;
+    margin:10px 0;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.letter-box:hover{
+    transform:scale(1.05);
+    background:#ffd1dc;
+}
+
+/* Success text animation */
+.success-text{
+    animation:popGlow 1.5s ease-in-out infinite alternate;
+}
+@keyframes popGlow{
+    from{transform:scale(1); text-shadow:0 0 5px pink;}
+    to{transform:scale(1.05); text-shadow:0 0 15px hotpink;}
+}
+
+/* Toast */
 .toast{
-position:fixed;
-bottom:30px;
-background:#ff4081;
-color:white;
-padding:12px 20px;
-border-radius:25px;
-opacity:0;
-transition:0.5s;
+    position:fixed;
+    bottom:30px;
+    background:#ff4081;
+    color:white;
+    padding:12px 20px;
+    border-radius:25px;
+    opacity:0;
+    transition:0.5s;
 }
 
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    background:red;
+    top:0;
+    animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(100vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+/* Modal */
 .modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.5);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:10;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
 }
+
 .letter{
-background:#ffd1dc;
-padding:20px;
-width:330px;
-border-radius:20px;
-max-height:85vh;
-overflow:auto;
+    background:white;
+    padding:25px;
+    width:300px;
+    border-radius:20px;
+    animation:pop 0.3s ease;
 }
-.close{text-align:right;color:red;cursor:pointer}
 
+@keyframes pop{
+    from{transform:scale(0.7);}
+    to{transform:scale(1);}
+}
+
+.close{
+    text-align:right;
+    cursor:pointer;
+    color:red;
+}
+
+/* Collage */
 .collage{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:10px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
 }
-.polaroid{
-background:white;
-padding:5px;
-border-radius:10px;
-box-shadow:0 5px 10px rgba(0,0,0,0.2);
+.collage img{
+    width:100%;
+    border-radius:12px;
+    box-shadow:0 0 8px pink;
+    transition:0.3s;
 }
-.polaroid img{
-width:100%;
-border-radius:8px;
+.collage img:hover{
+    transform:scale(1.08);
 }
-
-.love-card{
-background:#fff;
-padding:15px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
-text-align:left;
-}
-.love-card h3{text-align:center;color:#ff4081;}
-.love-card p{font-size:14px;line-height:1.6;}
 </style>
 </head>
-
 <body>
 
 <div class="card">
 
 <div id="proposal">
-<img id="gifImg" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="150">
+<img id="gifImg" src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
 <h2 id="question">Hey Chubiii, will you be my Valentine? 💖</h2>
 <button id="yesBtn" class="yes">Yes ❤️</button>
 <button id="noBtn" class="no">No</button>
 </div>
 
 <div id="success" class="hidden">
-<h2>Open Your Gifts 🎁</h2>
-<div class="gift-box" onclick="openGift(1)">🎁 Gift 1</div>
-<div class="gift-box" onclick="openGift(2)">🎁 Gift 2</div>
-<div class="gift-box" onclick="openGift(3)">🎁 Gift 3</div>
+<h2 class="success-text">Happy Valentine Chubiii 💍</h2>
+<h3 class="success-text">Thank you for choosing me ☺️💖</h3>
+<button onclick="showGifts()" class="yes">Open Gifts 🎁</button>
+</div>
+
+<div id="gifts" class="hidden">
+<h2>For You 💕</h2>
+<div class="letter-box" onclick="openGift(1)">🎁 Gift 1</div>
+<div class="letter-box" onclick="openGift(2)">🎁 Gift 2</div>
+<div class="letter-box" onclick="openGift(3)">🎁 Gift 3</div>
 </div>
 
 </div>
@@ -148,207 +209,136 @@ text-align:left;
 
 <div id="modal" class="modal">
 <div class="letter">
-<div class="close" onclick="closeLetter()">✖</div>
-<div id="letterContent"></div>
+<div class="close" onclick="closeGift()">✖</div>
+<div id="giftContent"></div>
 </div>
 </div>
 
 <script>
-const yesBtn=document.getElementById("yesBtn");
-const noBtn=document.getElementById("noBtn");
-const question=document.getElementById("question");
-const proposal=document.getElementById("proposal");
-const success=document.getElementById("success");
-const modal=document.getElementById("modal");
-const letterContent=document.getElementById("letterContent");
-const gifImg=document.getElementById("gifImg");
-const card=document.querySelector(".card");
-
-/* Floating hearts */
+/* Floating Hearts */
 setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="💖";
-h.style.left=Math.random()*100+"vw";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),6000);
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
 },800);
 
 /* NO button logic */
-let noTexts = [
-  "Think again 😭",
-  "Are you sure 😡?",
-  "See this 😏",
-  "Last chance 😢"
+let noTexts=["See this 😏","Still no? 😒","Think again 😢","Last chance 😤"];
+let gifs=[
+"https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+"https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+"https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif",
+"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
 ];
+let count=0;
+let size=16;
 
-let gifs = [
-  "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif",
-  "https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
-  "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
-  "https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif"
-];
-
-let count = 0;
-let size = 16;
-
-noBtn.onclick = function(){
-  if(count < noTexts.length){
-    question.innerText = noTexts[count];
-    gifImg.src = gifs[count];
-  }
-
-  size += 18;
-  yesBtn.style.fontSize = size + "px";
-
-  yesBtn.style.position = "relative";
-  yesBtn.style.zIndex = "5";
-  noBtn.style.position = "relative";
-  noBtn.style.zIndex = "1";
-
-  if(count >= 2){
-    yesBtn.style.transform = "scale(1.4)";
-  }
-
-  count++;
+noBtn.onclick=function(){
+    if(count<noTexts.length){
+        question.innerText=noTexts[count];
+        gifImg.src=gifs[count];
+    }
+    size+=12;
+    yesBtn.style.fontSize=size+"px";
+    yesBtn.style.position="relative";
+    yesBtn.style.zIndex="2";
+    noBtn.style.zIndex="1";
+    count++;
 };
 
-/* YES button */
+/* YES */
 yesBtn.onclick=function(){
-heartBurst();
-launchConfetti();
-showToast("She said YES 😍💖");
+    launchConfetti();
+    document.getElementById("proposal").classList.add("hidden");
+    document.getElementById("success").classList.remove("hidden");
+};
 
-card.style.transform="scale(1.1)";
-card.style.boxShadow="0 0 30px #ff4081";
-
-setTimeout(()=>{
-proposal.classList.add("hidden");
-success.classList.remove("hidden");
-card.style.transform="scale(1)";
-},1200);
+/* Confetti */
+function launchConfetti(){
+    for(let i=0;i<80;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
 }
 
-/* Gift logic */
+/* Gifts */
 let stage=0;
 
+function showGifts(){
+    document.getElementById("success").classList.add("hidden");
+    document.getElementById("gifts").classList.remove("hidden");
+}
+
 function openGift(n){
-if(stage>=5){openFreeGift(n);return;}
+    if(n==1){
+        if(stage==0){
+            showModal("😆 Cha… idhula onnum illa… Gift 2 ku po");
+            stage=1;
+        }else{
+            showModal(`
+            <h3>Ammu Dai ❤️</h3>
+            <p>You are my sunshine and my peace.<br><br>
+            Yours Lovingly,<br>
+            Sivuuu♥️</p>
+            `);
+        }
+    }
 
-if(n==1){
-if(stage==0){showModal("😜 Idhula onnum illa… next gift ku po");stage=1;}
-else if(stage==2){showRomanticLetter();stage=3;}
-else showToast("Follow order 😏");
+    if(n==2){
+        if(stage==1){
+            showModal("Cha cha.. na unna yemathuvena mu? Go back to gift 1");
+            stage=2;
+        }else if(stage>=2){
+            showModal(`
+            <h3>Our Memories 📸</h3>
+            <div class="collage">
+            <img src="IMG_6518_Original.jpeg">
+            <img src="IMG_7798_Original.png">
+            <img src="IMG_7825_Original.jpeg">
+            <img src="IMG_0655.jpeg">
+            <img src="IMG_0782.jpeg">
+            <img src="IMG_0535.jpeg">
+            </div>
+            `);
+        }
+    }
+
+    if(n==3){
+        if(stage<2){
+            showToast("First finish Gift 1 & 2 😜");
+        }else{
+            showModal(`
+            <h3>Our Forever 🎥</h3>
+            <video controls style="width:100%;border-radius:12px;">
+              <source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
+            </video>
+            <p>I love you always 💖</p>
+            `);
+        }
+    }
 }
 
-if(n==2){
-if(stage==1){showModal("😆 Cha cha.. na unna yemathuvena mu? Go back to Gift 1");stage=2;}
-else if(stage==3){showPhotoCollage();stage=4;}
-else showToast("Open Gift 1 first 😜");
+function showModal(txt){
+    giftContent.innerHTML=txt;
+    modal.style.display="flex";
 }
 
-if(n==3){
-if(stage<4) showToast("Finish Gift 1 & 2 first 😏");
-else{showVideoGift();stage=5;showToast("All gifts unlocked 💖");}
-}
+function closeGift(){
+    modal.style.display="none";
 }
 
-function openFreeGift(n){
-if(n==1) showRomanticLetter();
-if(n==2) showPhotoCollage();
-if(n==3) showVideoGift();
-}
-
-/* CONTENT */
-function showRomanticLetter(){
-showModal(`
-<div class="love-card">
-<h3>My Love 💖</h3>
-<p>
-Ammu Dai,<br><br>
-From the moment you came into my life, everything became brighter.  
-Your smile is my favorite view, your voice is my favorite sound,  
-and your love is my favorite feeling. 💕<br><br>
-
-No matter how far we go or how much time passes,  
-my heart will always look for you first.  
-You are my safe place, my happiness, my forever. 🥺❤️<br><br>
-
-I don’t want a perfect world…  
-I just want a world where it’s always <b>you and me</b>.  
-Holding hands, growing old, loving each other every single day. 💍<br><br>
-
-Yours Lovingly,<br>
-<b>Sivuuu ♥️</b>
-</p>
-</div>
-`);
-}
-
-function showPhotoCollage(){
-showModal(`
-<h3>Our Memories 📸</h3>
-<div class="collage">
-<div class="polaroid"><img src="IMG_6518_Original.jpeg"></div>
-<div class="polaroid"><img src="IMG_7798_Original.png"></div>
-<div class="polaroid"><img src="IMG_7825_Original.jpeg"></div>
-<div class="polaroid"><img src="IMG_0655.jpeg"></div>
-<div class="polaroid"><img src="IMG_0782.jpeg"></div>
-<div class="polaroid"><img src="IMG_0535.jpeg"></div>
-</div>
-`);
-}
-
-function showVideoGift(){
-showModal(`
-<h3>You & Me ❤️</h3>
-<video controls style="width:100%;border-radius:12px;">
-<source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
-</video>
-<p>My forever begins with you 💖</p>
-`);
-}
-
-/* Effects */
-function heartBurst(){
-for(let i=0;i<20;i++){
-let h=document.createElement("div");
-h.innerHTML="💖";
-h.style.position="fixed";
-h.style.left="50%";
-h.style.top="50%";
-h.style.transition="1s";
-document.body.appendChild(h);
-let x=(Math.random()*300)-150;
-let y=(Math.random()*300)-150;
-setTimeout(()=>{h.style.transform=`translate(${x}px,${y}px) scale(2)`;h.style.opacity=0;},10);
-setTimeout(()=>h.remove(),1000);
-}
-}
-
-function launchConfetti(){
-for(let i=0;i<50;i++){
-let c=document.createElement("div");
-c.style.position="fixed";
-c.style.width="8px";
-c.style.height="8px";
-c.style.background=`hsl(${Math.random()*360},100%,50%)`;
-c.style.left=Math.random()*100+"vw";
-c.style.top="0";
-c.style.animation="fall 3s linear forwards";
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),3000);
-}
-}
-
-/* Modal + toast */
-function showModal(txt){letterContent.innerHTML=txt;modal.style.display="flex";}
-function closeLetter(){modal.style.display="none";}
 function showToast(msg){
-let t=document.getElementById("toast");
-t.innerText=msg;
-t.style.opacity=1;
-setTimeout(()=>t.style.opacity=0,3000);
+    let t=document.getElementById("toast");
+    t.innerText=msg;
+    t.style.opacity=1;
+    setTimeout(()=>t.style.opacity=0,2500);
 }
 </script>
 
