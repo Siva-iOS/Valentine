@@ -165,7 +165,6 @@ line-height:1.6;
 </div>
 
 <script>
-/* ELEMENTS */
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const question = document.getElementById("question");
@@ -198,7 +197,7 @@ yesBtn.style.fontSize=size+"px";
 count++;
 }
 
-/* YES button */
+/* YES */
 yesBtn.onclick=function(){
 proposal.classList.add("hidden");
 success.classList.remove("hidden");
@@ -206,35 +205,24 @@ showToast("Start with Gift 1 💝");
 }
 
 /* Gift logic */
-let stage=0;
+let stage=0; // 0→1→2→3→4→5 free
 
 function openGift(n){
 
-if(stage==5){
+/* FREE MODE */
+if(stage>=5){
 openFreeGift(n);
 return;
 }
 
+/* GIFT 1 */
 if(n==1){
 if(stage==0){
 showModal("😜 Idhula onnum illa… next gift ku po");
-showToast("Try Gift 2 👉");
 stage=1;
 }
 else if(stage==2){
-showModal(`
-<div class="love-card">
-<h3>A Letter For You 💖</h3>
-<p>
-My Baby,<br><br>
-You are my peace, my happiness, my home.  
-No matter what happens, my heart will always choose you ❤️  
-<br><br>
-Forever yours 💕
-</p>
-</div>
-`);
-showToast("Now open Gift 2 again 💝");
+showRomanticLetter();
 stage=3;
 }
 else{
@@ -242,25 +230,14 @@ showToast("Follow the order 😏");
 }
 }
 
+/* GIFT 2 */
 if(n==2){
 if(stage==1){
-showModal("😆 Cha.. unna poi empty ah yemathuvena? Go back to Gift 1");
-showToast("Go back to Gift 1 🔁");
+showModal("😆 Cha… empty nu nenacha? Gift 1 ku thirumba po");
 stage=2;
 }
 else if(stage==3){
-showModal(`
-<h3>Look at this cutie 😭</h3>
-<div class="collage">
-<div class="polaroid"><img src="IMG_6518_Original.jpeg"><div class="caption">Sweet Hello</div></div>
-<div class="polaroid"><img src="IMG_7798_Original.png"><div class="caption">True Smile</div></div>
-<div class="polaroid"><img src="IMG_7825_Original.jpeg"><div class="caption">Our Moment</div></div>
-<div class="polaroid"><img src="IMG_0655.jpeg"><div class="caption">Only Us</div></div>
-<div class="polaroid"><img src="IMG_0782.jpeg"><div class="caption">My Home</div></div>
-<div class="polaroid"><img src="IMG_0535.jpeg"><div class="caption">Forever Us</div></div>
-</div>
-`);
-showToast("Gift 3 unlocked 🎥");
+showPhotoCollage();
 stage=4;
 }
 else{
@@ -268,41 +245,77 @@ showToast("Open Gift 1 first 😜");
 }
 }
 
+/* GIFT 3 */
 if(n==3){
 if(stage<4){
 showToast("Finish Gift 1 & 2 first 😏");
 }
 else{
-showModal(`
-<h3>You are my forever ❤️</h3>
-<video controls style="width:100%;border-radius:12px;">
-<source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
-</video>
-<p>I love you endlessly 💖</p>
-`);
-showToast("All gifts unlocked 🎁");
+showVideoGift();
 stage=5;
+showToast("Now all gifts are unlocked 💖");
 }
 }
 }
 
+/* FREE OPEN */
 function openFreeGift(n){
-if(n==1){
-showModal(`<div class="love-card"><h3>A Letter For You 💖</h3><p>You are my forever ❤️</p></div>`);
+if(n==1) showRomanticLetter();
+if(n==2) showPhotoCollage();
+if(n==3) showVideoGift();
 }
-if(n==2){
-showToast("Open Gift 2 again 💕");
-}
-if(n==3){
+
+/* CONTENT FUNCTIONS */
+function showRomanticLetter(){
 showModal(`
-<h3>You are my forever ❤️</h3>
+<div class="love-card">
+<h3>My Love 💖</h3>
+<p>
+My Chubiii,<br><br>
+From the moment you came into my life, everything became brighter.  
+Your smile is my favorite view, your voice is my favorite sound,  
+and your love is my favorite feeling. 💕<br><br>
+
+No matter how far we go or how much time passes,  
+my heart will always look for you first.  
+You are my safe place, my happiness, my forever. 🥺❤️<br><br>
+
+I don’t want a perfect world…  
+I just want a world where it’s always *you and me*.  
+Holding hands, growing old, loving each other every single day. 💍<br><br>
+
+Forever yours,  
+<br>❤️
+</p>
+</div>
+`);
+}
+
+function showPhotoCollage(){
+showModal(`
+<h3>Our Memories 📸</h3>
+<div class="collage">
+<div class="polaroid"><img src="IMG_6518_Original.jpeg"></div>
+<div class="polaroid"><img src="IMG_7798_Original.png"></div>
+<div class="polaroid"><img src="IMG_7825_Original.jpeg"></div>
+<div class="polaroid"><img src="IMG_0655.jpeg"></div>
+<div class="polaroid"><img src="IMG_0782.jpeg"></div>
+<div class="polaroid"><img src="IMG_0535.jpeg"></div>
+</div>
+`);
+}
+
+function showVideoGift(){
+showModal(`
+<h3>You & Me ❤️</h3>
 <video controls style="width:100%;border-radius:12px;">
 <source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
 </video>
+<p>My forever begins with you 💖</p>
 `);
 }
-}
 
+/* MODAL */
 function showModal(txt){
 letterContent.innerHTML=txt;
 modal.style.display="flex";
@@ -310,6 +323,8 @@ modal.style.display="flex";
 function closeLetter(){
 modal.style.display="none";
 }
+
+/* TOAST */
 function showToast(msg){
 let t=document.getElementById("toast");
 t.innerText=msg;
