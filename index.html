@@ -54,8 +54,8 @@ transition:0.3s;
 }
 
 .yes{background:#ff4081;color:white;}
-.no{background:#eee;}
-.no.disabled{background:#ffb6c1;color:white;cursor:not-allowed;}
+/* NO button color changed from start */
+.no{background:#ffb6c1;color:white;}
 
 .hidden{display:none;}
 
@@ -86,13 +86,32 @@ overflow:auto;
 }
 .close{text-align:right;color:red;cursor:pointer}
 
-.success-screen{
-animation:pop 0.6s ease;
+.collage{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:10px;
 }
-@keyframes pop{
-from{transform:scale(0.6);opacity:0;}
-to{transform:scale(1);opacity:1;}
+.polaroid{
+background:white;
+padding:5px;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
+.polaroid img{
+width:100%;
+border-radius:8px;
+}
+
+.love-card{
+background:#fff;
+padding:15px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+text-align:left;
+}
+.love-card h3{text-align:center;color:#ff4081;}
+.love-card p{font-size:14px;line-height:1.6;}
 </style>
 </head>
 
@@ -107,9 +126,9 @@ to{transform:scale(1);opacity:1;}
 <button id="noBtn" class="no">No</button>
 </div>
 
-<div id="success" class="hidden success-screen">
-<h2>Thank you for choosing me ☺️💖</h2>
-<h3>Happy Valentine 💝</h3>
+<div id="success" class="hidden">
+<h2>Thank you for choosing me ☺️</h2>
+<h3>Happy Valentine 💖</h3>
 <div class="gift-box" onclick="openGift(1)">🎁 Gift 1</div>
 <div class="gift-box" onclick="openGift(2)">🎁 Gift 2</div>
 <div class="gift-box" onclick="openGift(3)">🎁 Gift 3</div>
@@ -144,33 +163,48 @@ document.body.appendChild(h);
 setTimeout(()=>h.remove(),6000);
 },800);
 
-/* NO button logic */
-let noTexts=["Are you sure? 😳","Think again 🤨","See this 😼"];
-let gifs=[
-"https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
-"https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
-"https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif"
+/* NO button logic (REVERTED behavior) */
+let noTexts = [
+  "Are you sure? 😳",
+  "Think again 🤨",
+  "See this 😼"
 ];
-let count=0;
 
-noBtn.onclick=function(){
-if(count<noTexts.length){
-question.innerText=noTexts[count];
-gifImg.src=gifs[count];
-}
-yesBtn.style.fontSize=(16+count*10)+"px";
-if(count===2){
-noBtn.classList.add("disabled");
-noBtn.disabled=true;
-}
-count++;
-}
+let gifs = [
+  "https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif",
+  "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif",
+  "https://media.giphy.com/media/13CoXDiaCcCoyk/giphy.gif"
+];
+
+let count = 0;
+let size = 16;
+
+noBtn.onclick = function(){
+  if(count < noTexts.length){
+    question.innerText = noTexts[count];
+    gifImg.src = gifs[count];
+  }
+
+  size += 18;
+  yesBtn.style.fontSize = size + "px";
+
+  yesBtn.style.position = "relative";
+  yesBtn.style.zIndex = "5";
+  noBtn.style.position = "relative";
+  noBtn.style.zIndex = "1";
+
+  if(count >= 2){
+    yesBtn.style.transform = "scale(1.4)";
+  }
+
+  count++;
+};
 
 /* YES button */
 yesBtn.onclick=function(){
 proposal.classList.add("hidden");
 success.classList.remove("hidden");
-};
+}
 
 /* Gift logic */
 let stage=0;
@@ -199,16 +233,53 @@ if(n==2) showPhotoCollage();
 if(n==3) showVideoGift();
 }
 
+/* CONTENT */
 function showRomanticLetter(){
-showModal(`<h3>Ammu Dai 💕</h3><p>You are my forever 💖<br>Yours lovingly,<br><b>Sivuuu ♥️</b></p>`);
+showModal(`
+<div class="love-card">
+<h3>My Love 💖</h3>
+<p>
+Ammu Dai,<br><br>
+From the moment you came into my life, everything became brighter.  
+Your smile is my favorite view, your voice is my favorite sound,  
+and your love is my favorite feeling. 💕<br><br>
+
+No matter how far we go or how much time passes,  
+my heart will always look for you first.  
+You are my safe place, my happiness, my forever. 🥺❤️<br><br>
+
+I don’t want a perfect world…  
+I just want a world where it’s always <b>you and me</b>. 💍<br><br>
+
+Yours lovingly,<br>
+<b>Sivuuu ♥️</b>
+</p>
+</div>
+`);
 }
 
 function showPhotoCollage(){
-showModal(`<h3>Our Memories 📸</h3><p>Collage here</p>`);
+showModal(`
+<h3>Our Memories 📸</h3>
+<div class="collage">
+<div class="polaroid"><img src="IMG_6518_Original.jpeg"></div>
+<div class="polaroid"><img src="IMG_7798_Original.png"></div>
+<div class="polaroid"><img src="IMG_7825_Original.jpeg"></div>
+<div class="polaroid"><img src="IMG_0655.jpeg"></div>
+<div class="polaroid"><img src="IMG_0782.jpeg"></div>
+<div class="polaroid"><img src="IMG_0535.jpeg"></div>
+</div>
+`);
 }
 
 function showVideoGift(){
-showModal(`<h3>You & Me ❤️</h3><p>Video here</p>`);
+showModal(`
+<h3>You & Me ❤️</h3>
+<video controls style="width:100%;border-radius:12px;">
+<source src="3ca4dd48-14c9-442f-b82f-8a1cbef9509a.mov">
+</video>
+<p>My forever begins with you 💖</p>
+`);
 }
 
 function showModal(txt){letterContent.innerHTML=txt;modal.style.display="flex";}
